@@ -2,19 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GUNNER CASTLE AND CHATGPT CASINO WEBSITE</title>
+  <title>Gunner Casino</title>
   <style>
-    /* 
-    ==============================================================================
-      GLOBAL STYLES & RESET
-    ==============================================================================
-    */
+    /*************************************************************************
+     * GLOBAL RESET & BASE STYLES
+     *************************************************************************/
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to bottom right, #e1e9f0, #f8f9fa);
@@ -24,22 +21,22 @@
       padding: 0;
       transition: background 0.5s, color 0.5s;
     }
-
-    /* 
-    ==============================================================================
-      DARK MODE
-    ==============================================================================
-    */
+    /* Dark Mode */
     body.dark-mode {
       background: #121212;
-      color: #ddd;
+      color: #e0e0e0; /* Lighter text for dark background */
+    }
+    /* Extra for headings in dark mode */
+    body.dark-mode h1,
+    body.dark-mode h2,
+    body.dark-mode h3,
+    body.dark-mode h4 {
+      color: #fff;
     }
 
-    /* 
-    ==============================================================================
-      HEADER
-    ==============================================================================
-    */
+    /*************************************************************************
+     * HEADER
+     *************************************************************************/
     header {
       background: #343a40;
       color: #fff;
@@ -47,24 +44,20 @@
       text-align: center;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
-
     header h1 {
       font-size: 2rem;
       margin-bottom: 10px;
     }
-
     header p {
       font-size: 1rem;
       opacity: 0.9;
     }
 
-    /* 
-    ==============================================================================
-      MAIN WRAPPER & SIDEBAR
-    ==============================================================================
-    */
+    /*************************************************************************
+     * MAIN WRAPPER & SIDEBAR
+     *************************************************************************/
     .main-content {
-      max-width: 1300px;
+      max-width: 1400px;
       margin: 30px auto;
       background: #fff;
       border-radius: 8px;
@@ -74,32 +67,26 @@
       flex-direction: row;
       transition: background 0.5s, box-shadow 0.5s;
     }
-
     body.dark-mode .main-content {
       background: #1e1e1e;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
     }
-
     .sidebar {
       width: 220px;
       background: #f1f3f5;
       border-right: 1px solid #dee2e6;
       transition: background 0.5s;
     }
-
     body.dark-mode .sidebar {
       background: #2c2c2c;
       border-right: 1px solid #444;
     }
-
     .sidebar ul {
       list-style: none;
     }
-
     .sidebar li {
       border-bottom: 1px solid #dee2e6;
     }
-
     .sidebar li a {
       display: block;
       padding: 15px 20px;
@@ -108,47 +95,38 @@
       font-weight: 500;
       transition: background 0.3s, color 0.3s;
     }
-
     body.dark-mode .sidebar li a {
       color: #ddd;
     }
-
     .sidebar li a:hover,
     .sidebar li a.active {
       background: #ced4da;
       color: #000;
     }
 
-    /* 
-    ==============================================================================
-      CONTENT AREA & TAB SECTIONS
-    ==============================================================================
-    */
+    /*************************************************************************
+     * CONTENT AREA & TAB SECTIONS
+     *************************************************************************/
     .content {
       flex: 1;
       padding: 25px 40px;
       position: relative;
     }
-
     .tab-section {
       display: none;
-      animation: fadeIn 0.4s ease;
     }
-
     .tab-section.active {
       display: block;
+      animation: fadeIn 0.4s ease;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; }
-      to { opacity: 1; }
+      to   { opacity: 1; }
     }
 
-    /* 
-    ==============================================================================
-      GENERAL BUTTON & INPUT STYLES
-    ==============================================================================
-    */
+    /*************************************************************************
+     * GENERAL BUTTON & INPUT STYLES
+     *************************************************************************/
     button {
       padding: 10px 18px;
       margin: 5px 0;
@@ -160,12 +138,10 @@
       font-size: 15px;
       transition: background 0.3s, transform 0.2s;
     }
-
     button:hover {
       background: #0056b3;
       transform: translateY(-2px);
     }
-
     input[type="file"],
     input[type="number"],
     input[type="text"],
@@ -177,36 +153,14 @@
       border: 1px solid #ccc;
       width: 100%;
     }
-
     input[type="checkbox"] {
       transform: scale(1.2);
       margin-right: 5px;
     }
 
-    /* 
-    ==============================================================================
-      INFO ICON (INSTRUCTIONS BUTTON)
-    ==============================================================================
-    */
-    .info-icon-btn {
-      background: transparent;
-      color: #007bff;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-      margin-left: 8px;
-      transition: color 0.3s, transform 0.2s;
-    }
-    .info-icon-btn:hover {
-      color: #0056b3;
-      transform: scale(1.1);
-    }
-
-    /* 
-    ==============================================================================
-      SAVE FILE SECTION
-    ==============================================================================
-    */
+    /*************************************************************************
+     * SAVE FILE SECTION
+     *************************************************************************/
     .save-file-section {
       margin: 20px 0;
       background: #f8f9fa;
@@ -214,23 +168,47 @@
       border-radius: 6px;
       border: 1px solid #dee2e6;
     }
-
     body.dark-mode .save-file-section {
       background: #2c2c2c;
       border: 1px solid #444;
     }
-
     #loadMessage {
       margin-top: 10px;
       font-weight: bold;
       color: #e60000;
     }
 
-    /* 
-    ==============================================================================
-      GAME BOX
-    ==============================================================================
-    */
+    /*************************************************************************
+     * SUB-TABS FOR CASINO / GENERAL GAMES
+     *************************************************************************/
+    .sub-tab-buttons {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .sub-tab-buttons button {
+      background: #6c757d;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+    .sub-tab-buttons button.active {
+      background: #495057;
+    }
+    .sub-tab-content {
+      display: none;
+    }
+    .sub-tab-content.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    /*************************************************************************
+     * GAME BOXES
+     *************************************************************************/
     .game-box {
       margin-top: 20px;
       padding: 20px;
@@ -238,70 +216,56 @@
       border-radius: 6px;
       border: 1px solid #dee2e6;
     }
-
     body.dark-mode .game-box {
       background: #2c2c2c;
       border: 1px solid #444;
     }
-
     .game-box h3 {
       margin-bottom: 12px;
     }
-
     .status-message {
       margin-top: 12px;
       font-weight: bold;
     }
 
-    .disabled {
-      opacity: 0.5;
-      pointer-events: none;
+    /*************************************************************************
+     * HORSE RACES ANIMATION
+     *************************************************************************/
+    .race-track {
+      position: relative;
+      width: 80%;
+      height: 120px;
+      background: #fafafa;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+    .horse {
+      position: absolute;
+      font-size: 1.5rem;
+      top: 0;
+      left: 0;
+      transition: left 0.1s;
     }
 
-    /* 
-    ==============================================================================
-      BLACKJACK SPECIFIC
-    ==============================================================================
-    */
-    .cards {
-      margin-top: 10px;
-    }
-    .card {
+    /*************************************************************************
+     * TEXAS HOLD EM CARDS
+     *************************************************************************/
+    .card-display {
       display: inline-block;
-      padding: 6px 10px;
-      margin: 0 4px;
-      border: 1px solid #ccc;
+      padding: 6px 8px;
+      margin: 3px;
+      border: 1px solid #666;
       border-radius: 4px;
       background: #fff;
-      font-size: 1rem;
+      font-size: 0.9rem;
+      color: #000;
     }
 
-    /* 
-    ==============================================================================
-      ROULETTE, SLOTS, HORSE RACES, ETC.
-    ==============================================================================
-    */
-    #rouletteResult,
-    #slotsResult,
-    #horseRacesResult,
-    #rpsResult,
-    #coinFlipResult,
-    #holdemResult,
-    #ticTacToeResult {
-      margin-top: 12px;
-      font-weight: bold;
-    }
-
-    #slotsReels {
-      margin-top: 12px;
-      font-size: 1.4rem;
-    }
-
-    /* 
-    ==============================================================================
-      SETTINGS TAB
-    ==============================================================================
-    */
+    /*************************************************************************
+     * ADDITIONAL ADMIN / SETTINGS / ETC.
+     *************************************************************************/
+    .admin-section,
     .settings-section {
       margin-top: 20px;
       padding: 20px;
@@ -309,39 +273,18 @@
       border-radius: 6px;
       border: 1px solid #ced4da;
     }
-
+    body.dark-mode .admin-section,
     body.dark-mode .settings-section {
       background: #333;
       border: 1px solid #555;
     }
-
     .settings-option {
       margin-bottom: 20px;
     }
 
-    /* 
-    ==============================================================================
-      ADMIN TAB
-    ==============================================================================
-    */
-    .admin-section {
-      margin-top: 20px;
-      padding: 20px;
-      background: #e9ecef;
-      border-radius: 6px;
-      border: 1px solid #ced4da;
-    }
-
-    body.dark-mode .admin-section {
-      background: #333;
-      border: 1px solid #555;
-    }
-
-    /* 
-    ==============================================================================
-      MODALS (KEYPAD, INSTRUCTIONS)
-    ==============================================================================
-    */
+    /*************************************************************************
+     * MODALS (KEYPAD, ETC.)
+     *************************************************************************/
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -357,7 +300,6 @@
     .modal-overlay.active {
       display: flex;
     }
-
     .modal {
       background: #fff;
       padding: 25px;
@@ -371,15 +313,13 @@
       background: #444;
       color: #eee;
     }
-
-    /* Keypad Modal */
+    /* Keypad for Admin Code */
     .keypad {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 10px;
       margin-top: 20px;
     }
-
     .keypad button {
       padding: 15px;
       font-size: 1.2rem;
@@ -392,7 +332,6 @@
     .keypad button:hover {
       background: #0056b3;
     }
-
     .keypad-display {
       margin-bottom: 15px;
       font-size: 1.4rem;
@@ -401,28 +340,21 @@
       border-radius: 4px;
       padding: 8px;
       background: #fafafa;
+      color: #000;
     }
     body.dark-mode .keypad-display {
       background: #666;
       border: 1px solid #888;
       color: #fff;
     }
-
     #keypadError {
       color: #e60000;
       margin-top: 10px;
     }
 
-    /* Instructions Modal */
-    .instructions-content {
-      text-align: left;
-    }
-
-    /* 
-    ==============================================================================
-      RESPONSIVENESS
-    ==============================================================================
-    */
+    /*************************************************************************
+     * MEDIA QUERIES
+     *************************************************************************/
     @media (max-width: 768px) {
       .main-content {
         flex-direction: column;
@@ -446,78 +378,47 @@
         border-right: none;
       }
     }
-
-    /* 
-    ==============================================================================
-      END OF CSS
-    ==============================================================================
-    */
   </style>
 </head>
 <body>
 
-  <!-- 
-  ==============================================================================
-    HEADER
-  ==============================================================================
-  -->
+  <!-- HEADER -->
   <header>
-    <h1>GUNNER CASTLE AND CHATGPT CASINO WEBSITE</h1>
-    <p>Enjoy Blackjack, Roulette, Slots, Horse Races, Tic-Tac-Toe, RPS, Coin Flip, Texas Hold Em, and more!</p>
+    <h1>Gunner Casino</h1>
+    <p>Play Casino & General Games, featuring advanced Admin modes!</p>
   </header>
 
-  <!-- 
-  ==============================================================================
-    MAIN CONTENT WRAPPER
-  ==============================================================================
-  -->
+  <!-- MAIN CONTENT WRAPPER -->
   <div class="main-content">
 
-    <!-- 
-    ==============================================================================
-      SIDEBAR (TABS NAVIGATION)
-    ==============================================================================
-    -->
+    <!-- SIDEBAR (PRIMARY TABS) -->
     <nav class="sidebar">
       <ul>
         <li><a href="#" class="tablink active" data-tab="tabLoadSave">Load/Save</a></li>
-        <li><a href="#" class="tablink" data-tab="tabBlackjack">Blackjack</a></li>
-        <li><a href="#" class="tablink" data-tab="tabRoulette">Roulette</a></li>
-        <li><a href="#" class="tablink" data-tab="tabSlots">Slots</a></li>
-        <li><a href="#" class="tablink" data-tab="tabHorseRaces">Horse Races</a></li>
-        <li><a href="#" class="tablink" data-tab="tabTicTacToe">AI Tic-Tac-Toe</a></li>
-        <li><a href="#" class="tablink" data-tab="tabRPS">AI Rock Paper Scissors</a></li>
-        <li><a href="#" class="tablink" data-tab="tabCoinFlip">Coin Flip</a></li>
-        <li><a href="#" class="tablink" data-tab="tabHoldEm">Texas Hold Em</a></li>
+        <li><a href="#" class="tablink" data-tab="tabCasinoGames">Casino Games</a></li>
+        <li><a href="#" class="tablink" data-tab="tabGeneralGames">General Games</a></li>
         <li><a href="#" class="tablink" data-tab="tabVersion">Version</a></li>
         <li><a href="#" class="tablink" data-tab="tabSettings">Settings</a></li>
-        <!-- Admin tab is hidden by default -->
         <li id="adminTabLink" style="display:none;"><a href="#" class="tablink" data-tab="tabAdmin">Admin</a></li>
       </ul>
     </nav>
 
-    <!-- 
-    ==============================================================================
-      CONTENT AREA (TAB SECTIONS)
-    ==============================================================================
-    -->
+    <!-- CONTENT AREA -->
     <div class="content">
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
            TAB: LOAD/SAVE
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
       <div id="tabLoadSave" class="tab-section active">
         <h2>Load/Save Your Game</h2>
         <p>Use the template or upload your existing save file to continue playing.</p>
 
-        <!-- Download Template Section -->
         <div class="save-file-section">
           <h3>Download Save Template</h3>
           <p>This template starts you off with $500.</p>
           <button id="downloadTemplateBtn">Download Save Template</button>
         </div>
 
-        <!-- Upload Save File Section -->
         <div class="save-file-section" style="margin-top: 30px;">
           <h3>Upload Save File</h3>
           <input type="file" id="saveFileInput" accept=".txt,.hex">
@@ -525,7 +426,6 @@
           <p id="loadMessage"></p>
         </div>
 
-        <!-- Download Updated Save Section -->
         <div class="save-file-section" style="margin-top: 30px;">
           <h3>Download Updated Save File</h3>
           <p>After playing, download a file to save your progress.</p>
@@ -533,146 +433,237 @@
         </div>
       </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           TAB: BLACKJACK
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <div id="tabBlackjack" class="tab-section">
-        <h2>Blackjack 
-          <button class="info-icon-btn" data-instructions="blackjack">ℹ</button>
-        </h2>
-        <p>Current Balance: <strong><span id="moneyDisplayBlackjack">0</span></strong></p>
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           TAB: CASINO GAMES
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+      <div id="tabCasinoGames" class="tab-section">
+        <h2>Casino Games</h2>
+        <p>Current Balance: <strong><span id="casinoBalanceDisplay">0</span></strong></p>
 
-        <div class="game-box">
-          <h3>Play Blackjack</h3>
-          <div>
-            <label>Bet Amount:
-              <input type="number" id="blackjackBet" value="10" min="1">
-            </label>
-            <button id="blackjackDealBtn">Deal</button>
-            <button id="blackjackHitBtn" disabled>Hit</button>
-            <button id="blackjackStandBtn" disabled>Stand</button>
-          </div>
-          <div id="blackjackStatus" class="status-message"></div>
-          <div class="cards">
-            <div>Player Cards: <span id="playerCards"></span> | <strong>Total:</strong> <span id="playerTotal">0</span></div>
-            <div>Dealer Cards: <span id="dealerCards"></span> | <strong>Total:</strong> <span id="dealerTotal">0</span></div>
+        <!-- SUB-TAB BUTTONS for Casino Games -->
+        <div class="sub-tab-buttons" id="casinoSubTabs">
+          <button data-subtab="blackjackSub" class="active">Blackjack</button>
+          <button data-subtab="rouletteSub">Roulette</button>
+          <button data-subtab="slotsSub">Slots</button>
+          <button data-subtab="horseRacesSub">Horse Races</button>
+          <button data-subtab="holdemSub">Texas Hold Em</button>
+          <button data-subtab="bingoSub">Bingo</button>
+          <button data-subtab="kenoSub">Keno</button>
+          <button data-subtab="warSub">War</button>
+          <button data-subtab="highLowSub">High-Low</button>
+          <button data-subtab="lotterySub">Lottery</button>
+        </div>
+
+        <!-- SUB-TAB CONTENTS -->
+        <!-- Blackjack -->
+        <div class="sub-tab-content active" id="blackjackSub">
+          <div class="game-box">
+            <h3>Blackjack</h3>
+            <div>
+              <label>Bet Amount:
+                <input type="number" id="blackjackBet" value="10" min="1">
+              </label>
+              <button id="blackjackDealBtn">Deal</button>
+              <button id="blackjackHitBtn" disabled>Hit</button>
+              <button id="blackjackStandBtn" disabled>Stand</button>
+            </div>
+            <div id="blackjackStatus" class="status-message"></div>
+            <div style="margin-top:10px;">
+              <div>Player Cards: <span id="playerCards"></span> | <strong>Total:</strong> <span id="playerTotal">0</span></div>
+              <div>Dealer Cards: <span id="dealerCards"></span> | <strong>Total:</strong> <span id="dealerTotal">0</span></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           TAB: ROULETTE
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <div id="tabRoulette" class="tab-section">
-        <h2>Roulette 
-          <button class="info-icon-btn" data-instructions="roulette">ℹ</button>
-        </h2>
-        <p>Current Balance: <strong><span id="moneyDisplayRoulette">0</span></strong></p>
+        <!-- Roulette -->
+        <div class="sub-tab-content" id="rouletteSub">
+          <div class="game-box">
+            <h3>Roulette</h3>
+            <div>
+              <label>Bet Amount:
+                <input type="number" id="rouletteBet" value="10" min="1">
+              </label>
+              <label>Bet on:
+                <select id="rouletteChoice">
+                  <option value="red">Red</option>
+                  <option value="black">Black</option>
+                  <option value="0">0</option>
+                </select>
+              </label>
+              <button id="rouletteSpinBtn">Spin</button>
+            </div>
+            <div id="rouletteResult"></div>
+          </div>
+        </div>
 
-        <div class="game-box">
-          <h3>Play Roulette</h3>
-          <div>
+        <!-- Slots -->
+        <div class="sub-tab-content" id="slotsSub">
+          <div class="game-box">
+            <h3>Slots</h3>
+            <div>
+              <label>Bet Amount:
+                <input type="number" id="slotsBet" value="10" min="1">
+              </label>
+              <button id="slotsSpinBtn">Spin</button>
+            </div>
+            <div id="slotsReels" style="margin-top:10px;">[ ? ] [ ? ] [ ? ]</div>
+            <div id="slotsResult" class="status-message"></div>
+          </div>
+        </div>
+
+        <!-- Horse Races -->
+        <div class="sub-tab-content" id="horseRacesSub">
+          <div class="game-box">
+            <h3>Horse Races</h3>
+            <div>
+              <label>Bet Amount:
+                <input type="number" id="horseRaceBet" value="10" min="1">
+              </label>
+              <label>Choose Horse:
+                <select id="horseChoice">
+                  <option value="1">Horse 1</option>
+                  <option value="2">Horse 2</option>
+                  <option value="3">Horse 3</option>
+                  <option value="4">Horse 4</option>
+                </select>
+              </label>
+              <button id="horseRaceBtn">Start Race</button>
+            </div>
+            <div id="horseRacesResult" class="status-message"></div>
+
+            <!-- Race track (minimal animation) -->
+            <div class="race-track" id="raceTrack">
+              <!-- 4 horse elements appended by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Texas Hold Em -->
+        <div class="sub-tab-content" id="holdemSub">
+          <div class="game-box">
+            <h3>Texas Hold Em</h3>
+            <div>
+              <label>Bet Amount:
+                <input type="number" id="holdemBet" value="10" min="1">
+              </label>
+              <button id="holdemDealBtn">Deal</button>
+            </div>
+            <div id="holdemPlayerCards" style="margin-top:10px;"></div>
+            <div id="holdemDealerCards" style="margin-top:10px;"></div>
+            <div id="holdemCommunityCards" style="margin-top:10px;"></div>
+            <div id="holdemResult" class="status-message"></div>
+          </div>
+        </div>
+
+        <!-- Bingo -->
+        <div class="sub-tab-content" id="bingoSub">
+          <div class="game-box">
+            <h3>Bingo</h3>
+            <p>A quick simplified Bingo: place a bet, random chance to "win".</p>
             <label>Bet Amount:
-              <input type="number" id="rouletteBet" value="10" min="1">
+              <input type="number" id="bingoBet" value="10" min="1">
             </label>
-            <label>Bet on:
-              <select id="rouletteChoice">
-                <option value="red">Red</option>
-                <option value="black">Black</option>
-                <option value="0">0</option>
+            <button id="bingoPlayBtn">Play Bingo</button>
+            <div id="bingoResult" class="status-message"></div>
+          </div>
+        </div>
+
+        <!-- Keno -->
+        <div class="sub-tab-content" id="kenoSub">
+          <div class="game-box">
+            <h3>Keno</h3>
+            <p>Pick numbers, see if they match. We'll simplify it to a random outcome.</p>
+            <label>Bet Amount:
+              <input type="number" id="kenoBet" value="10" min="1">
+            </label>
+            <button id="kenoPlayBtn">Play Keno</button>
+            <div id="kenoResult" class="status-message"></div>
+          </div>
+        </div>
+
+        <!-- War -->
+        <div class="sub-tab-content" id="warSub">
+          <div class="game-box">
+            <h3>War</h3>
+            <p>Each side draws a card; higher card wins.</p>
+            <label>Bet Amount:
+              <input type="number" id="warBet" value="10" min="1">
+            </label>
+            <button id="warPlayBtn">Play War</button>
+            <div id="warPlayerCard" style="margin-top:10px;"></div>
+            <div id="warDealerCard" style="margin-top:10px;"></div>
+            <div id="warResult" class="status-message"></div>
+          </div>
+        </div>
+
+        <!-- High-Low -->
+        <div class="sub-tab-content" id="highLowSub">
+          <div class="game-box">
+            <h3>High-Low</h3>
+            <p>Guess if the next card is higher or lower than the current card.</p>
+            <label>Bet Amount:
+              <input type="number" id="highLowBet" value="10" min="1">
+            </label>
+            <label>Your Guess:
+              <select id="highLowGuess">
+                <option value="higher">Higher</option>
+                <option value="lower">Lower</option>
               </select>
             </label>
-            <button id="rouletteSpinBtn">Spin</button>
+            <button id="highLowPlayBtn">Play</button>
+            <div id="highLowCards" style="margin-top:10px;"></div>
+            <div id="highLowResult" class="status-message"></div>
           </div>
-          <div id="rouletteResult"></div>
         </div>
-      </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           TAB: SLOTS
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <div id="tabSlots" class="tab-section">
-        <h2>Slots 
-          <button class="info-icon-btn" data-instructions="slots">ℹ</button>
-        </h2>
-        <p>Current Balance: <strong><span id="moneyDisplaySlots">0</span></strong></p>
-
-        <div class="game-box">
-          <h3>Play Slots</h3>
-          <div>
-            <label>Bet Amount:
-              <input type="number" id="slotsBet" value="10" min="1">
+        <!-- Lottery Ticket Buyer -->
+        <div class="sub-tab-content" id="lotterySub">
+          <div class="game-box">
+            <h3>Lottery Ticket</h3>
+            <p>Buy a ticket, random chance to win a jackpot!</p>
+            <label>Ticket Cost:
+              <input type="number" id="lotteryCost" value="10" min="1">
             </label>
-            <button id="slotsSpinBtn">Spin</button>
+            <button id="lotteryBuyBtn">Buy Ticket</button>
+            <div id="lotteryResult" class="status-message"></div>
           </div>
-          <div id="slotsReels">[ ? ] [ ? ] [ ? ]</div>
-          <div id="slotsResult"></div>
         </div>
-      </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           TAB: HORSE RACES
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <div id="tabHorseRaces" class="tab-section">
-        <h2>Horse Races 
-          <button class="info-icon-btn" data-instructions="horseraces">ℹ</button>
-        </h2>
-        <p>Current Balance: <strong><span id="moneyDisplayHorseRaces">0</span></strong></p>
+      </div><!-- end #tabCasinoGames -->
 
-        <div class="game-box">
-          <h3>Bet on a Horse</h3>
-          <div>
-            <label>Bet Amount:
-              <input type="number" id="horseRaceBet" value="10" min="1">
-            </label>
-            <label>Choose Horse:
-              <select id="horseChoice">
-                <option value="1">Horse 1</option>
-                <option value="2">Horse 2</option>
-                <option value="3">Horse 3</option>
-                <option value="4">Horse 4</option>
-              </select>
-            </label>
-            <button id="horseRaceBtn">Race</button>
-          </div>
-          <div id="horseRacesResult"></div>
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           TAB: GENERAL GAMES
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+      <div id="tabGeneralGames" class="tab-section">
+        <h2>General Games</h2>
+        <p>Current Balance: <strong><span id="generalBalanceDisplay">0</span></strong></p>
+
+        <!-- SUB-TAB BUTTONS for General Games -->
+        <div class="sub-tab-buttons" id="generalSubTabs">
+          <button data-subtab="ticTacToeSub" class="active">Tic-Tac-Toe</button>
+          <button data-subtab="rpsSub">Rock Paper Scissors</button>
+          <button data-subtab="coinFlipSub">Coin Flip</button>
+          <button data-subtab="memoryMatchSub">Memory Match</button>
         </div>
-      </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           TAB: AI TIC-TAC-TOE
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <div id="tabTicTacToe" class="tab-section">
-        <h2>AI Tic-Tac-Toe 
-          <button class="info-icon-btn" data-instructions="tictactoe">ℹ</button>
-        </h2>
-        <p>Current Balance: <strong><span id="moneyDisplayTicTacToe">0</span></strong></p>
-
-        <div class="game-box">
-          <h3>Play Tic-Tac-Toe</h3>
-          <div>
+        <!-- SUB-TAB CONTENTS -->
+        <!-- Tic-Tac-Toe -->
+        <div class="sub-tab-content active" id="ticTacToeSub">
+          <div class="game-box">
+            <h3>AI Tic-Tac-Toe</h3>
             <label>Bet Amount:
               <input type="number" id="ticTacToeBet" value="10" min="1">
             </label>
             <button id="ticTacToeStartBtn">Start Game</button>
+            <div id="ticTacToeResult" class="status-message"></div>
+            <div id="ticTacToeBoard" style="margin-top:20px; display:flex; flex-wrap:wrap; width:150px;"></div>
           </div>
-          <div id="ticTacToeBoard" style="margin-top:20px; display:flex; flex-wrap:wrap; width:150px;"></div>
-          <div id="ticTacToeResult"></div>
         </div>
-      </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           TAB: AI ROCK PAPER SCISSORS
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <div id="tabRPS" class="tab-section">
-        <h2>AI Rock Paper Scissors 
-          <button class="info-icon-btn" data-instructions="rps">ℹ</button>
-        </h2>
-        <p>Current Balance: <strong><span id="moneyDisplayRPS">0</span></strong></p>
-
-        <div class="game-box">
-          <h3>Play RPS</h3>
-          <div>
+        <!-- Rock Paper Scissors -->
+        <div class="sub-tab-content" id="rpsSub">
+          <div class="game-box">
+            <h3>AI Rock Paper Scissors</h3>
             <label>Bet Amount:
               <input type="number" id="rpsBet" value="10" min="1">
             </label>
@@ -684,23 +675,14 @@
               </select>
             </label>
             <button id="rpsPlayBtn">Play</button>
+            <div id="rpsResult" class="status-message"></div>
           </div>
-          <div id="rpsResult"></div>
         </div>
-      </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           TAB: COIN FLIP
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <div id="tabCoinFlip" class="tab-section">
-        <h2>Coin Flip 
-          <button class="info-icon-btn" data-instructions="coinflip">ℹ</button>
-        </h2>
-        <p>Current Balance: <strong><span id="moneyDisplayCoinFlip">0</span></strong></p>
-
-        <div class="game-box">
-          <h3>Flip a Coin</h3>
-          <div>
+        <!-- Coin Flip -->
+        <div class="sub-tab-content" id="coinFlipSub">
+          <div class="game-box">
+            <h3>Coin Flip</h3>
             <label>Bet Amount:
               <input type="number" id="coinFlipBet" value="10" min="1">
             </label>
@@ -711,52 +693,51 @@
               </select>
             </label>
             <button id="coinFlipBtn">Flip</button>
+            <div id="coinFlipResult" class="status-message"></div>
           </div>
-          <div id="coinFlipResult"></div>
         </div>
-      </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           TAB: TEXAS HOLD EM
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      <div id="tabHoldEm" class="tab-section">
-        <h2>Texas Hold Em 
-          <button class="info-icon-btn" data-instructions="holdem">ℹ</button>
-        </h2>
-        <p>Current Balance: <strong><span id="moneyDisplayHoldEm">0</span></strong></p>
-
-        <div class="game-box">
-          <h3>Play Texas Hold Em (Simplified)</h3>
-          <div>
+        <!-- Memory Match (Simplified) -->
+        <div class="sub-tab-content" id="memoryMatchSub">
+          <div class="game-box">
+            <h3>Memory Match (Demo)</h3>
+            <p>Click “Play” to attempt a random memory match outcome. (Simplified)</p>
             <label>Bet Amount:
-              <input type="number" id="holdemBet" value="10" min="1">
+              <input type="number" id="memoryMatchBet" value="10" min="1">
             </label>
-            <button id="holdemDealBtn">Deal</button>
+            <button id="memoryMatchPlayBtn">Play</button>
+            <div id="memoryMatchResult" class="status-message"></div>
           </div>
-          <div id="holdemResult"></div>
         </div>
-      </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           TAB: VERSION (CHANGELOG)
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+      </div><!-- end #tabGeneralGames -->
+
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           TAB: VERSION
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
       <div id="tabVersion" class="tab-section">
         <h2>Version / Changelog</h2>
         <div class="game-box">
           <h3>Changelog</h3>
           <ul style="line-height:1.6;">
-            <li>Added Horse Races, AI Tic-Tac-Toe, AI Rock Paper Scissors, Coin Flip, and Texas Hold Em.</li>
-            <li>Added Version tab for release notes.</li>
-            <li>Added instructions icons (ℹ) to each game tab.</li>
-            <li>Improved UI polish and removed placeholder text.</li>
-            <li>Retained Admin Mode with rig feature.</li>
+            <li>Added Bingo, Keno, War, High-Low, Memory Match (5 new games).</li>
+            <li>Added Lottery Ticket Buyer.</li>
+            <li>Texas Hold Em now shows actual cards, Horse Races show a simple race.</li>
+            <li>Game tabs split into Casino Games & General Games.</li>
+            <li>New “Gunner Mode” in Admin (highest security/tweaks).</li>
+            <li>Dark Mode text color improved.</li>
+          </ul>
+          <h4>Credits:</h4>
+          <ul>
+            <li>Game Design: Gunner Castle</li>
+            <li>Bug Fixing: ChatGPT</li>
           </ul>
         </div>
       </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
            TAB: SETTINGS
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
       <div id="tabSettings" class="tab-section">
         <h2>Settings</h2>
         <div class="settings-section">
@@ -770,9 +751,9 @@
         </div>
       </div>
 
-      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
            TAB: ADMIN (HIDDEN BY DEFAULT)
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
       <div id="tabAdmin" class="tab-section">
         <h2>Admin Panel</h2>
         <div class="admin-section">
@@ -790,17 +771,25 @@
           <p>Toggle rig to win all games automatically:</p>
           <label for="adminRigToggle">Rig Enabled:</label>
           <input type="checkbox" id="adminRigToggle">
+
+          <h3>Gunner Mode</h3>
+          <p>The highest level of security & tweaks. Overrides even Rig Mode.</p>
+          <label for="gunnerModeToggle">Gunner Mode:</label>
+          <input type="checkbox" id="gunnerModeToggle">
+
+          <h3>Additional Tools</h3>
+          <p>Placeholder admin tools (manage logs, IP ban, reset stats, etc.):</p>
+          <button>Manage Logs</button>
+          <button>IP Ban System</button>
+          <button>Reset Game Stats</button>
+          <button>Enable Super Speed</button>
         </div>
       </div>
 
     </div> <!-- end .content -->
   </div> <!-- end .main-content -->
 
-  <!-- 
-  ==============================================================================
-    KEYPAD MODAL FOR ADMIN CODE
-  ==============================================================================
-  -->
+  <!-- KEYPAD MODAL (for Admin Code) -->
   <div id="keypadModal" class="modal-overlay">
     <div class="modal">
       <h3>Enter Admin Code</h3>
@@ -825,168 +814,77 @@
     </div>
   </div>
 
-  <!-- 
-  ==============================================================================
-    INSTRUCTIONS MODAL
-  ==============================================================================
-  -->
-  <div id="instructionsModal" class="modal-overlay">
-    <div class="modal">
-      <h3>Game Instructions</h3>
-      <div class="instructions-content" id="instructionsContent"></div>
-      <div style="margin-top:15px;">
-        <button id="instructionsCloseBtn">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 
-  ==============================================================================
-    JAVASCRIPT
-  ==============================================================================
-  -->
   <script>
-    /***********************************************************************************
-     * GLOBAL VARIABLES
-     ***********************************************************************************/
-    let playerMoney = 0;           // Player's current money
-    let isSaveLoaded = false;      // Whether a valid save is loaded
-    let rigEnabled = false;        // Admin rig: force wins
-    let adminModeActive = false;   // Admin mode status
+    /*****************************************************************************
+     * GLOBALS & STATE
+     *****************************************************************************/
+    let playerMoney = 0;
+    let isSaveLoaded = false;
+    let rigEnabled = false;       // Rig Mode
+    let gunnerModeEnabled = false; // Gunner Mode (overrides everything)
+    let adminModeActive = false;
 
-    // Admin code required for keypad
     const ADMIN_CODE = "1636";
     let enteredCode = "";
 
-    // Tab & content elements
-    const tabLinks    = document.querySelectorAll(".tablink");
-    const tabSections = document.querySelectorAll(".tab-section");
+    // For sub tabs
+    let currentCasinoSub = "blackjackSub";
+    let currentGeneralSub = "ticTacToeSub";
 
-    // For load/save
+    // File input, load/save, etc.
     const saveFileInput   = document.getElementById("saveFileInput");
     const loadSaveBtn     = document.getElementById("loadSaveBtn");
     const loadMessage     = document.getElementById("loadMessage");
     const downloadTemplateBtn = document.getElementById("downloadTemplateBtn");
     const downloadSaveBtn     = document.getElementById("downloadSaveBtn");
 
-    // Money displays
-    const moneyDisplayBlackjack  = document.getElementById("moneyDisplayBlackjack");
-    const moneyDisplayRoulette   = document.getElementById("moneyDisplayRoulette");
-    const moneyDisplaySlots      = document.getElementById("moneyDisplaySlots");
-    const moneyDisplayHorseRaces = document.getElementById("moneyDisplayHorseRaces");
-    const moneyDisplayTicTacToe  = document.getElementById("moneyDisplayTicTacToe");
-    const moneyDisplayRPS        = document.getElementById("moneyDisplayRPS");
-    const moneyDisplayCoinFlip   = document.getElementById("moneyDisplayCoinFlip");
-    const moneyDisplayHoldEm     = document.getElementById("moneyDisplayHoldEm");
+    // Tab links
+    const tabLinks    = document.querySelectorAll(".tablink");
+    const tabSections = document.querySelectorAll(".tab-section");
 
-    // Settings & Admin
+    // Casino sub tabs
+    const casinoSubTabs = document.getElementById("casinoSubTabs").querySelectorAll("button");
+    const casinoSubContents = document.querySelectorAll("#tabCasinoGames .sub-tab-content");
+
+    // General sub tabs
+    const generalSubTabs = document.getElementById("generalSubTabs").querySelectorAll("button");
+    const generalSubContents = document.querySelectorAll("#tabGeneralGames .sub-tab-content");
+
+    // Admin tab link
+    const adminTabLink = document.getElementById("adminTabLink");
+
+    // Money displays
+    const casinoBalanceDisplay  = document.getElementById("casinoBalanceDisplay");
+    const generalBalanceDisplay = document.getElementById("generalBalanceDisplay");
+
+    // Settings
     const darkModeToggle  = document.getElementById("darkModeToggle");
     const adminModeBtn    = document.getElementById("adminModeBtn");
-    const adminTabLink    = document.getElementById("adminTabLink");
 
     // Admin controls
-    const adminMoneyInput      = document.getElementById("adminMoneyInput");
-    const adminSetMoneyBtn     = document.getElementById("adminSetMoneyBtn");
-    const adminCustomSaveInput = document.getElementById("adminCustomSaveInput");
-    const adminGenerateSaveBtn = document.getElementById("adminGenerateSaveBtn");
-    const adminRigToggle       = document.getElementById("adminRigToggle");
+    const adminMoneyInput       = document.getElementById("adminMoneyInput");
+    const adminSetMoneyBtn      = document.getElementById("adminSetMoneyBtn");
+    const adminCustomSaveInput  = document.getElementById("adminCustomSaveInput");
+    const adminGenerateSaveBtn  = document.getElementById("adminGenerateSaveBtn");
+    const adminRigToggle        = document.getElementById("adminRigToggle");
+    const gunnerModeToggle      = document.getElementById("gunnerModeToggle");
 
     // Keypad modal
-    const keypadModal      = document.getElementById("keypadModal");
-    const keypadDisplay    = document.getElementById("keypadDisplay");
-    const keypadError      = document.getElementById("keypadError");
-    const keypadClearBtn   = document.getElementById("keypadClearBtn");
-    const keypadSubmitBtn  = document.getElementById("keypadSubmitBtn");
-    const keypadButtons    = document.querySelectorAll(".keypad-btn");
+    const keypadModal     = document.getElementById("keypadModal");
+    const keypadDisplay   = document.getElementById("keypadDisplay");
+    const keypadError     = document.getElementById("keypadError");
+    const keypadClearBtn  = document.getElementById("keypadClearBtn");
+    const keypadSubmitBtn = document.getElementById("keypadSubmitBtn");
+    const keypadButtons   = document.querySelectorAll(".keypad-btn");
 
-    // Instructions modal
-    const instructionsModal      = document.getElementById("instructionsModal");
-    const instructionsContent    = document.getElementById("instructionsContent");
-    const instructionsCloseBtn   = document.getElementById("instructionsCloseBtn");
-    const infoIconButtons       = document.querySelectorAll(".info-icon-btn");
+    /*****************************************************************************
+     * HELPER FUNCTIONS
+     *****************************************************************************/
+    function updateAllDisplays() {
+      casinoBalanceDisplay.textContent  = playerMoney;
+      generalBalanceDisplay.textContent = playerMoney;
+    }
 
-    // Blackjack elements
-    let deck = [];
-    let playerCards = [];
-    let dealerCards = [];
-
-    const blackjackBetInput = document.getElementById("blackjackBet");
-    const blackjackDealBtn  = document.getElementById("blackjackDealBtn");
-    const blackjackHitBtn   = document.getElementById("blackjackHitBtn");
-    const blackjackStandBtn = document.getElementById("blackjackStandBtn");
-    const blackjackStatus   = document.getElementById("blackjackStatus");
-    const playerCardsSpan   = document.getElementById("playerCards");
-    const dealerCardsSpan   = document.getElementById("dealerCards");
-    const playerTotalSpan   = document.getElementById("playerTotal");
-    const dealerTotalSpan   = document.getElementById("dealerTotal");
-
-    const suits = ["♠", "♥", "♦", "♣"];
-    const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-
-    // Roulette elements
-    const rouletteBetInput   = document.getElementById("rouletteBet");
-    const rouletteChoiceSelect = document.getElementById("rouletteChoice");
-    const rouletteSpinBtn    = document.getElementById("rouletteSpinBtn");
-    const rouletteResult     = document.getElementById("rouletteResult");
-
-    // Slots elements
-    const slotsBetInput = document.getElementById("slotsBet");
-    const slotsSpinBtn  = document.getElementById("slotsSpinBtn");
-    const slotsReels    = document.getElementById("slotsReels");
-    const slotsResult   = document.getElementById("slotsResult");
-    const symbols       = ["🍒", "🍋", "🔔", "⭐", "🍀"];
-
-    // Horse Races
-    const horseRaceBetInput  = document.getElementById("horseRaceBet");
-    const horseChoiceSelect  = document.getElementById("horseChoice");
-    const horseRaceBtn       = document.getElementById("horseRaceBtn");
-    const horseRacesResult   = document.getElementById("horseRacesResult");
-
-    // Tic-Tac-Toe
-    const ticTacToeBetInput  = document.getElementById("ticTacToeBet");
-    const ticTacToeStartBtn  = document.getElementById("ticTacToeStartBtn");
-    const ticTacToeBoard     = document.getElementById("ticTacToeBoard");
-    const ticTacToeResult    = document.getElementById("ticTacToeResult");
-
-    // RPS
-    const rpsBetInput    = document.getElementById("rpsBet");
-    const rpsChoiceSelect= document.getElementById("rpsChoice");
-    const rpsPlayBtn     = document.getElementById("rpsPlayBtn");
-    const rpsResult      = document.getElementById("rpsResult");
-
-    // Coin Flip
-    const coinFlipBetInput = document.getElementById("coinFlipBet");
-    const coinFlipChoice   = document.getElementById("coinFlipChoice");
-    const coinFlipBtn      = document.getElementById("coinFlipBtn");
-    const coinFlipResult   = document.getElementById("coinFlipResult");
-
-    // Texas Hold Em
-    const holdemBetInput   = document.getElementById("holdemBet");
-    const holdemDealBtn    = document.getElementById("holdemDealBtn");
-    const holdemResult     = document.getElementById("holdemResult");
-
-    /***********************************************************************************
-     * TAB NAVIGATION
-     ***********************************************************************************/
-    tabLinks.forEach(link => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        // Remove active from all
-        tabLinks.forEach(l => l.classList.remove("active"));
-        tabSections.forEach(sec => sec.classList.remove("active"));
-
-        link.classList.add("active");
-        const tabId = link.getAttribute("data-tab");
-        const targetTab = document.getElementById(tabId);
-        if (targetTab) {
-          targetTab.classList.add("active");
-        }
-      });
-    });
-
-    /***********************************************************************************
-     * LOAD/SAVE LOGIC
-     ***********************************************************************************/
     function createStarterSaveFileContent() {
       return (
 `GUNNER CASTLE AND CHATGPT CASINO WEBSITE
@@ -1001,21 +899,22 @@ $:500
       const moneyMatch  = contents.match(/Money:(\d+)/);
       const goldMatch   = contents.match(/Gold:(\d+)/);
       const dollarMatch = contents.match(/\$:(\d+)/);
-
       if (!moneyMatch || !goldMatch || !dollarMatch) {
         return null;
       }
-
       const moneyVal  = parseInt(moneyMatch[1], 10);
       const goldVal   = parseInt(goldMatch[1], 10);
       const dollarVal = parseInt(dollarMatch[1], 10);
-
       if (moneyVal !== goldVal || goldVal !== dollarVal) {
         return null;
       }
       return moneyVal;
     }
 
+    /**
+     * createSaveFileContent(moneyValue)
+     * Format the file name as "GunnerCasino HH:MM:SSAM/PM.hex" when we do the download.
+     */
     function createSaveFileContent(moneyValue) {
       return (
 `GUNNER CASTLE AND CHATGPT CASINO WEBSITE
@@ -1024,6 +923,20 @@ Gold:${moneyValue}
 $:${moneyValue}
 `
       );
+    }
+
+    function getTimestampFileName() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+      if (hours === 0) hours = 12;
+      const hh = (hours < 10) ? "0" + hours : hours;
+      const mm = (minutes < 10) ? "0" + minutes : minutes;
+      const ss = (seconds < 10) ? "0" + seconds : seconds;
+      return `GunnerCasino ${hh}:${mm}:${ss}${ampm}.hex`;
     }
 
     function downloadFile(content, filename) {
@@ -1038,9 +951,62 @@ $:${moneyValue}
       URL.revokeObjectURL(url);
     }
 
+    /*****************************************************************************
+     * TAB NAVIGATION
+     *****************************************************************************/
+    tabLinks.forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        // Hide all main tabs
+        tabSections.forEach(sec => sec.classList.remove("active"));
+        // Remove active from all links
+        tabLinks.forEach(l => l.classList.remove("active"));
+
+        // Activate the clicked link & corresponding tab
+        link.classList.add("active");
+        const tabId = link.getAttribute("data-tab");
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) {
+          targetTab.classList.add("active");
+        }
+      });
+    });
+
+    // Casino sub-tab logic
+    casinoSubTabs.forEach(btn => {
+      btn.addEventListener("click", () => {
+        // Hide all
+        casinoSubContents.forEach(sub => sub.classList.remove("active"));
+        casinoSubTabs.forEach(b => b.classList.remove("active"));
+
+        btn.classList.add("active");
+        const subId = btn.getAttribute("data-subtab");
+        document.getElementById(subId).classList.add("active");
+        currentCasinoSub = subId;
+      });
+    });
+
+    // General sub-tab logic
+    generalSubTabs.forEach(btn => {
+      btn.addEventListener("click", () => {
+        // Hide all
+        generalSubContents.forEach(sub => sub.classList.remove("active"));
+        generalSubTabs.forEach(b => b.classList.remove("active"));
+
+        btn.classList.add("active");
+        const subId = btn.getAttribute("data-subtab");
+        document.getElementById(subId).classList.add("active");
+        currentGeneralSub = subId;
+      });
+    });
+
+    /*****************************************************************************
+     * LOAD / SAVE EVENTS
+     *****************************************************************************/
     downloadTemplateBtn.addEventListener("click", () => {
-      const starterContent = createStarterSaveFileContent();
-      downloadFile(starterContent, "GunnerCastleChatGPTCasinoTemplate.hex");
+      const content = createStarterSaveFileContent();
+      const fileName = getTimestampFileName(); // e.g. "GunnerCasino 01:02:03PM.hex"
+      downloadFile(content, fileName);
     });
 
     loadSaveBtn.addEventListener("click", () => {
@@ -1050,7 +1016,7 @@ $:${moneyValue}
         return;
       }
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = (e) => {
         const contents = e.target.result;
         const moneyVal = parseSaveFile(contents);
         if (moneyVal === null) {
@@ -1061,7 +1027,7 @@ $:${moneyValue}
           loadMessage.textContent = "Save file loaded successfully!";
           isSaveLoaded = true;
           playerMoney = moneyVal;
-          updateAllMoneyDisplays();
+          updateAllDisplays();
           downloadSaveBtn.disabled = false;
         }
       };
@@ -1073,27 +1039,14 @@ $:${moneyValue}
         alert("No valid save loaded yet. Please load a save file first.");
         return;
       }
-      const fileContents = createSaveFileContent(playerMoney);
-      downloadFile(fileContents, "GunnerCastleChatGPTCasino.hex");
+      const content = createSaveFileContent(playerMoney);
+      const fileName = getTimestampFileName();
+      downloadFile(content, fileName);
     });
 
-    /***********************************************************************************
-     * MONEY DISPLAY UPDATES
-     ***********************************************************************************/
-    function updateAllMoneyDisplays() {
-      moneyDisplayBlackjack.textContent  = playerMoney;
-      moneyDisplayRoulette.textContent   = playerMoney;
-      moneyDisplaySlots.textContent      = playerMoney;
-      moneyDisplayHorseRaces.textContent = playerMoney;
-      moneyDisplayTicTacToe.textContent  = playerMoney;
-      moneyDisplayRPS.textContent        = playerMoney;
-      moneyDisplayCoinFlip.textContent   = playerMoney;
-      moneyDisplayHoldEm.textContent     = playerMoney;
-    }
-
-    /***********************************************************************************
-     * DARK MODE TOGGLE
-     ***********************************************************************************/
+    /*****************************************************************************
+     * DARK MODE
+     *****************************************************************************/
     darkModeToggle.addEventListener("change", () => {
       if (darkModeToggle.checked) {
         document.body.classList.add("dark-mode");
@@ -1102,16 +1055,15 @@ $:${moneyValue}
       }
     });
 
-    /***********************************************************************************
-     * ADMIN MODE & KEYPAD
-     ***********************************************************************************/
+    /*****************************************************************************
+     * ADMIN MODE (KEYPAD)
+     *****************************************************************************/
     adminModeBtn.addEventListener("click", () => {
       keypadModal.classList.add("active");
       enteredCode = "";
       keypadDisplay.textContent = "";
       keypadError.textContent = "";
     });
-
     keypadButtons.forEach(btn => {
       btn.addEventListener("click", () => {
         const key = btn.getAttribute("data-key");
@@ -1119,13 +1071,11 @@ $:${moneyValue}
         keypadDisplay.textContent = enteredCode;
       });
     });
-
     keypadClearBtn.addEventListener("click", () => {
       enteredCode = "";
       keypadDisplay.textContent = "";
       keypadError.textContent = "";
     });
-
     keypadSubmitBtn.addEventListener("click", () => {
       if (enteredCode === ADMIN_CODE) {
         adminModeActive = true;
@@ -1139,122 +1089,64 @@ $:${moneyValue}
       }
     });
 
-    /***********************************************************************************
-     * ADMIN TAB CONTROLS
-     ***********************************************************************************/
+    /*****************************************************************************
+     * ADMIN PANEL CONTROLS
+     *****************************************************************************/
     adminSetMoneyBtn.addEventListener("click", () => {
       const newMoney = parseInt(adminMoneyInput.value, 10);
       if (!isNaN(newMoney)) {
         playerMoney = newMoney;
-        updateAllMoneyDisplays();
+        updateAllDisplays();
         alert("Player money updated successfully.");
       } else {
         alert("Invalid money value.");
       }
     });
-
     adminGenerateSaveBtn.addEventListener("click", () => {
       const customMoney = parseInt(adminCustomSaveInput.value, 10);
       if (!isNaN(customMoney)) {
-        const customSaveContent = createSaveFileContent(customMoney);
-        downloadFile(customSaveContent, "CustomGunnerCastleChatGPTCasino.hex");
+        const content = createSaveFileContent(customMoney);
+        const fileName = getTimestampFileName();
+        downloadFile(content, fileName);
       } else {
         alert("Please enter a valid money value.");
       }
     });
-
     adminRigToggle.addEventListener("change", () => {
       rigEnabled = adminRigToggle.checked;
-      alert("Game rig " + (rigEnabled ? "enabled: You will win all games." : "disabled: Normal game rules."));
+      alert("Rig " + (rigEnabled ? "enabled" : "disabled"));
+    });
+    gunnerModeToggle.addEventListener("change", () => {
+      gunnerModeEnabled = gunnerModeToggle.checked;
+      alert("Gunner Mode " + (gunnerModeEnabled ? "ENABLED (ultimate power!)" : "DISABLED"));
     });
 
-    /***********************************************************************************
-     * INSTRUCTIONS MODAL LOGIC
-     ***********************************************************************************/
-    // Basic instructions for each game
-    const gameInstructions = {
-      blackjack: `
-        <p><strong>Blackjack Instructions:</strong></p>
-        <ul>
-          <li>Place your bet, then click "Deal".</li>
-          <li>You receive two cards; the dealer also receives two.</li>
-          <li>"Hit" to draw another card, "Stand" to hold.</li>
-          <li>Ace can be 1 or 11. Try to get close to 21 without busting!</li>
-        </ul>
-      `,
-      roulette: `
-        <p><strong>Roulette Instructions:</strong></p>
-        <ul>
-          <li>Place your bet and choose Red, Black, or 0.</li>
-          <li>Spin the wheel and see if you guessed correctly.</li>
-          <li>Red/Black pays 1:1, 0 pays 35:1.</li>
-        </ul>
-      `,
-      slots: `
-        <p><strong>Slots Instructions:</strong></p>
-        <ul>
-          <li>Place your bet and click "Spin".</li>
-          <li>Match symbols on the 3 reels to win.</li>
-          <li>Three of a kind pays 5x, two of a kind pays 2x.</li>
-        </ul>
-      `,
-      horseraces: `
-        <p><strong>Horse Races Instructions:</strong></p>
-        <ul>
-          <li>Choose a horse (1-4) and place your bet.</li>
-          <li>Click "Race" to see which horse wins.</li>
-          <li>If your horse wins, you earn a payout.</li>
-        </ul>
-      `,
-      tictactoe: `
-        <p><strong>Tic-Tac-Toe Instructions:</strong></p>
-        <ul>
-          <li>Place a bet, then click "Start Game".</li>
-          <li>You are X, the AI is O. Take turns placing marks.</li>
-          <li>First to 3 in a row wins. If you win, you gain the bet.</li>
-        </ul>
-      `,
-      rps: `
-        <p><strong>Rock Paper Scissors Instructions:</strong></p>
-        <ul>
-          <li>Place a bet, pick Rock, Paper, or Scissors.</li>
-          <li>Click "Play" to see if you beat the AI's random choice.</li>
-          <li>Winning doubles your bet; losing subtracts it.</li>
-        </ul>
-      `,
-      coinflip: `
-        <p><strong>Coin Flip Instructions:</strong></p>
-        <ul>
-          <li>Place a bet and call Heads or Tails.</li>
-          <li>Click "Flip" to toss the coin.</li>
-          <li>If you guess correctly, you win the bet amount.</li>
-        </ul>
-      `,
-      holdem: `
-        <p><strong>Texas Hold Em (Simplified) Instructions:</strong></p>
-        <ul>
-          <li>Place your bet, then click "Deal".</li>
-          <li>You get two cards; AI gets two. Community cards are revealed.</li>
-          <li>Whoever forms the best 5-card hand wins!</li>
-        </ul>
-      `
-    };
+    /*****************************************************************************
+     * GAME OUTCOME OVERRIDES
+     * If gunnerModeEnabled is true, user can never lose. (Stronger than rigEnabled)
+     *****************************************************************************/
+    function userAlwaysWins() {
+      return gunnerModeEnabled || rigEnabled;
+    }
 
-    infoIconButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const key = btn.getAttribute("data-instructions");
-        instructionsContent.innerHTML = gameInstructions[key] || "<p>No instructions found.</p>";
-        instructionsModal.classList.add("active");
-      });
-    });
-
-    instructionsCloseBtn.addEventListener("click", () => {
-      instructionsModal.classList.remove("active");
-    });
-
-    /***********************************************************************************
+    /*****************************************************************************
      * BLACKJACK LOGIC
-     ***********************************************************************************/
+     *****************************************************************************/
+    let deck = [];
+    let playerCards = [];
+    let dealerCards = [];
+    const suits = ["♠", "♥", "♦", "♣"];
+    const ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+    const blackjackBetInput = document.getElementById("blackjackBet");
+    const blackjackDealBtn  = document.getElementById("blackjackDealBtn");
+    const blackjackHitBtn   = document.getElementById("blackjackHitBtn");
+    const blackjackStandBtn = document.getElementById("blackjackStandBtn");
+    const blackjackStatus   = document.getElementById("blackjackStatus");
+    const playerCardsSpan   = document.getElementById("playerCards");
+    const dealerCardsSpan   = document.getElementById("dealerCards");
+    const playerTotalSpan   = document.getElementById("playerTotal");
+    const dealerTotalSpan   = document.getElementById("dealerTotal");
+
     function initDeck() {
       deck = [];
       for (let s of suits) {
@@ -1268,13 +1160,11 @@ $:${moneyValue}
         [deck[i], deck[j]] = [deck[j], deck[i]];
       }
     }
-
     function getCardValue(card) {
       if (card.rank === "A") return 11;
       if (["J","Q","K"].includes(card.rank)) return 10;
       return parseInt(card.rank, 10);
     }
-
     function calculateTotal(cards) {
       let total = 0;
       let aceCount = 0;
@@ -1288,34 +1178,31 @@ $:${moneyValue}
       }
       return total;
     }
-
     function renderHands() {
       playerCardsSpan.textContent = playerCards.map(c => c.rank + c.suit).join(" ");
       dealerCardsSpan.textContent = dealerCards.map(c => c.rank + c.suit).join(" ");
       playerTotalSpan.textContent = calculateTotal(playerCards);
       dealerTotalSpan.textContent = calculateTotal(dealerCards);
     }
-
-    function endBlackjackRound(message) {
+    function endBlackjackRound(msg) {
       const bet = parseInt(blackjackBetInput.value, 10);
-      if (rigEnabled) {
+      if (userAlwaysWins()) {
         // Force a win
         playerMoney += bet;
-        message = "Rig Enabled: Automatic win!";
+        msg = "Gunner/Rig Mode: Automatic win!";
       } else {
-        if (message.includes("You win")) {
+        if (msg.includes("You win")) {
           playerMoney += bet;
-        } else if (message.includes("lose") || message.includes("Dealer wins")) {
+        } else if (msg.includes("lose") || msg.includes("Dealer wins")) {
           playerMoney -= bet;
         }
       }
-      updateAllMoneyDisplays();
-      blackjackStatus.textContent = message;
+      updateAllDisplays();
+      blackjackStatus.textContent = msg;
       blackjackHitBtn.disabled = true;
       blackjackStandBtn.disabled = true;
       blackjackDealBtn.disabled = false;
     }
-
     blackjackDealBtn.addEventListener("click", () => {
       if (!isSaveLoaded) {
         alert("Please load a valid save file first.");
@@ -1337,29 +1224,24 @@ $:${moneyValue}
 
       renderHands();
     });
-
     blackjackHitBtn.addEventListener("click", () => {
       playerCards.push(deck.pop());
       renderHands();
-      const total = calculateTotal(playerCards);
-      if (total > 21) {
+      if (calculateTotal(playerCards) > 21) {
         endBlackjackRound("Bust! You lose.");
       }
     });
-
     blackjackStandBtn.addEventListener("click", () => {
-      if (rigEnabled) {
-        endBlackjackRound("Rig Enabled: You win automatically!");
+      if (userAlwaysWins()) {
+        endBlackjackRound("Gunner/Rig Mode: You automatically win!");
         return;
       }
       while (calculateTotal(dealerCards) < 17) {
         dealerCards.push(deck.pop());
       }
       renderHands();
-
       const playerTotal = calculateTotal(playerCards);
       const dealerTotal = calculateTotal(dealerCards);
-
       if (dealerTotal > 21) {
         endBlackjackRound("Dealer busts! You win.");
       } else if (playerTotal > dealerTotal) {
@@ -1371,9 +1253,14 @@ $:${moneyValue}
       }
     });
 
-    /***********************************************************************************
-     * ROULETTE LOGIC
-     ***********************************************************************************/
+    /*****************************************************************************
+     * ROULETTE
+     *****************************************************************************/
+    const rouletteBetInput = document.getElementById("rouletteBet");
+    const rouletteChoiceSelect = document.getElementById("rouletteChoice");
+    const rouletteSpinBtn = document.getElementById("rouletteSpinBtn");
+    const rouletteResult  = document.getElementById("rouletteResult");
+
     rouletteSpinBtn.addEventListener("click", () => {
       if (!isSaveLoaded) {
         alert("Please load a valid save file first.");
@@ -1390,19 +1277,16 @@ $:${moneyValue}
         spinColor = (spinNumber % 2 === 0) ? "black" : "red";
       }
       const choice = rouletteChoiceSelect.value;
-      let outcome = `Spin: ${spinNumber} (${spinColor}) - You lose.`;
       let won = false;
-
-      if (choice === "0") {
-        if (spinNumber === 0) won = true;
-      } else {
-        if (spinColor === choice) won = true;
+      if (choice === "0" && spinNumber === 0) {
+        won = true;
+      } else if (spinColor === choice) {
+        won = true;
       }
-
-      if (rigEnabled) {
-        won = true; // Force a win
+      if (userAlwaysWins()) {
+        won = true;
       }
-
+      let outcome = `Spin: ${spinNumber} (${spinColor}) - You lose.`;
       if (won) {
         if (choice === "0") {
           playerMoney += bet * 35;
@@ -1414,13 +1298,19 @@ $:${moneyValue}
       } else {
         playerMoney -= bet;
       }
-      updateAllMoneyDisplays();
+      updateAllDisplays();
       rouletteResult.textContent = outcome;
     });
 
-    /***********************************************************************************
-     * SLOTS LOGIC
-     ***********************************************************************************/
+    /*****************************************************************************
+     * SLOTS
+     *****************************************************************************/
+    const slotsBetInput = document.getElementById("slotsBet");
+    const slotsSpinBtn  = document.getElementById("slotsSpinBtn");
+    const slotsReels    = document.getElementById("slotsReels");
+    const slotsResult   = document.getElementById("slotsResult");
+    const slotSymbols   = ["🍒", "🍋", "🔔", "⭐", "🍀"];
+
     slotsSpinBtn.addEventListener("click", () => {
       if (!isSaveLoaded) {
         alert("Please load a valid save file first.");
@@ -1431,20 +1321,17 @@ $:${moneyValue}
         alert("Invalid bet amount!");
         return;
       }
-
       let reel1, reel2, reel3;
-      if (rigEnabled) {
-        // Force three-of-a-kind
-        reel1 = symbols[0];
-        reel2 = symbols[0];
-        reel3 = symbols[0];
+      if (userAlwaysWins()) {
+        reel1 = slotSymbols[0];
+        reel2 = slotSymbols[0];
+        reel3 = slotSymbols[0];
       } else {
-        reel1 = symbols[Math.floor(Math.random() * symbols.length)];
-        reel2 = symbols[Math.floor(Math.random() * symbols.length)];
-        reel3 = symbols[Math.floor(Math.random() * symbols.length)];
+        reel1 = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+        reel2 = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+        reel3 = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
       }
       slotsReels.textContent = `[ ${reel1} ] [ ${reel2} ] [ ${reel3} ]`;
-
       if (reel1 === reel2 && reel2 === reel3) {
         const winAmount = bet * 5;
         playerMoney += winAmount;
@@ -1457,12 +1344,18 @@ $:${moneyValue}
         playerMoney -= bet;
         slotsResult.textContent = `No match! You lost $${bet}.`;
       }
-      updateAllMoneyDisplays();
+      updateAllDisplays();
     });
 
-    /***********************************************************************************
-     * HORSE RACES LOGIC
-     ***********************************************************************************/
+    /*****************************************************************************
+     * HORSE RACES
+     *****************************************************************************/
+    const horseRaceBetInput  = document.getElementById("horseRaceBet");
+    const horseChoiceSelect  = document.getElementById("horseChoice");
+    const horseRaceBtn       = document.getElementById("horseRaceBtn");
+    const horseRacesResult   = document.getElementById("horseRacesResult");
+    const raceTrack          = document.getElementById("raceTrack");
+    let raceInterval = null;
     horseRaceBtn.addEventListener("click", () => {
       if (!isSaveLoaded) {
         alert("Please load a valid save file first.");
@@ -1475,242 +1368,66 @@ $:${moneyValue}
       }
       const chosenHorse = parseInt(horseChoiceSelect.value, 10);
 
-      // Pick a random winning horse (1-4)
-      let winningHorse = Math.floor(Math.random() * 4) + 1;
-      if (rigEnabled) {
-        // Force your chosen horse to win
-        winningHorse = chosenHorse;
+      // Clear any previous race
+      clearInterval(raceInterval);
+      raceTrack.innerHTML = "";
+      horseRacesResult.textContent = "";
+
+      // Create 4 horses
+      const horses = [];
+      for (let i = 1; i <= 4; i++) {
+        const horseEl = document.createElement("div");
+        horseEl.classList.add("horse");
+        horseEl.style.top = `${(i-1)*30}px`;
+        horseEl.textContent = `🐎Horse ${i}`;
+        horseEl.dataset.horse = i.toString();
+        raceTrack.appendChild(horseEl);
+        horses.push(horseEl);
       }
 
-      let outcome = `Horse ${winningHorse} wins!`;
-      if (winningHorse === chosenHorse) {
-        // Let's say we double the money for a correct pick
-        playerMoney += bet;
-        outcome += ` You WON $${bet}!`;
-      } else {
-        playerMoney -= bet;
-        outcome += ` You lost $${bet}.`;
-      }
-      updateAllMoneyDisplays();
-      horseRacesResult.textContent = outcome;
-    });
-
-    /***********************************************************************************
-     * AI TIC-TAC-TOE LOGIC (Basic)
-     ***********************************************************************************/
-    const TTT_SIZE = 9;  // 3x3
-    let tttBoard = Array(TTT_SIZE).fill("");
-    let tttGameActive = false;
-    let tttCurrentPlayer = "X"; // Player is X, AI is O
-
-    ticTacToeStartBtn.addEventListener("click", () => {
-      if (!isSaveLoaded) {
-        alert("Please load a valid save file first.");
-        return;
-      }
-      const bet = parseInt(ticTacToeBetInput.value, 10);
-      if (bet <= 0 || bet > playerMoney) {
-        alert("Invalid bet amount!");
-        return;
-      }
-      startTicTacToeGame();
-    });
-
-    function startTicTacToeGame() {
-      tttBoard = Array(TTT_SIZE).fill("");
-      tttGameActive = true;
-      tttCurrentPlayer = "X";
-      ticTacToeResult.textContent = "";
-      renderTicTacToeBoard();
-    }
-
-    function renderTicTacToeBoard() {
-      ticTacToeBoard.innerHTML = "";
-      for (let i = 0; i < TTT_SIZE; i++) {
-        const cell = document.createElement("div");
-        cell.style.width = "50px";
-        cell.style.height = "50px";
-        cell.style.border = "1px solid #333";
-        cell.style.display = "flex";
-        cell.style.alignItems = "center";
-        cell.style.justifyContent = "center";
-        cell.style.fontSize = "1.5rem";
-        cell.style.cursor = "pointer";
-        cell.dataset.index = i;
-        cell.textContent = tttBoard[i];
-        cell.addEventListener("click", onTicTacToeCellClick);
-        ticTacToeBoard.appendChild(cell);
-      }
-    }
-
-    function onTicTacToeCellClick(e) {
-      if (!tttGameActive) return;
-      const index = parseInt(e.target.dataset.index, 10);
-      if (tttBoard[index] !== "") return; // already taken
-      tttBoard[index] = tttCurrentPlayer;
-      renderTicTacToeBoard();
-
-      if (checkTicTacToeWin(tttCurrentPlayer)) {
-        endTicTacToeGame(`${tttCurrentPlayer} wins!`);
-        return;
-      }
-      if (tttBoard.every(cell => cell !== "")) {
-        endTicTacToeGame("It's a draw!");
-        return;
-      }
-      // Switch player
-      tttCurrentPlayer = (tttCurrentPlayer === "X") ? "O" : "X";
-
-      if (tttCurrentPlayer === "O") {
-        // AI move
-        setTimeout(aiTicTacToeMove, 500);
-      }
-    }
-
-    function aiTicTacToeMove() {
-      // If rig is enabled, we can let the player always lose or always win. 
-      // But let's keep it simple: AI picks a random empty spot.
-      let emptyIndices = [];
-      for (let i = 0; i < TTT_SIZE; i++) {
-        if (tttBoard[i] === "") {
-          emptyIndices.push(i);
+      // Start animation
+      const trackWidth = raceTrack.offsetWidth;
+      raceInterval = setInterval(() => {
+        let finished = false;
+        for (let h of horses) {
+          let currentLeft = parseInt(h.style.left) || 0;
+          let move = Math.floor(Math.random() * 5) + 1; // random step
+          if (userAlwaysWins() && parseInt(h.dataset.horse, 10) === chosenHorse) {
+            move = 7; // your horse moves faster
+          }
+          let newLeft = currentLeft + move;
+          h.style.left = newLeft + "px";
+          if (newLeft + 80 >= trackWidth) {
+            // Horse h finished
+            finished = true;
+            clearInterval(raceInterval);
+            const winningHorse = parseInt(h.dataset.horse, 10);
+            let outcome = `Horse ${winningHorse} wins! `;
+            if (winningHorse === chosenHorse) {
+              playerMoney += bet;
+              outcome += `You WON $${bet}!`;
+            } else {
+              playerMoney -= bet;
+              outcome += `You lost $${bet}.`;
+            }
+            updateAllDisplays();
+            horseRacesResult.textContent = outcome;
+            break;
+          }
         }
-      }
-      if (emptyIndices.length === 0) {
-        // draw
-        endTicTacToeGame("It's a draw!");
-        return;
-      }
-      let aiChoice = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
-      if (rigEnabled) {
-        // If rig is on, let's intentionally pick a bad move so the user can win easily
-        // i.e., just pick the first empty index
-        aiChoice = emptyIndices[0];
-      }
-      tttBoard[aiChoice] = "O";
-      renderTicTacToeBoard();
-
-      if (checkTicTacToeWin("O")) {
-        endTicTacToeGame("O wins!");
-        return;
-      }
-      if (tttBoard.every(cell => cell !== "")) {
-        endTicTacToeGame("It's a draw!");
-        return;
-      }
-      tttCurrentPlayer = "X";
-    }
-
-    function checkTicTacToeWin(player) {
-      const wins = [
-        [0,1,2],[3,4,5],[6,7,8],
-        [0,3,6],[1,4,7],[2,5,8],
-        [0,4,8],[2,4,6]
-      ];
-      return wins.some(pattern => 
-        pattern.every(idx => tttBoard[idx] === player)
-      );
-    }
-
-    function endTicTacToeGame(msg) {
-      tttGameActive = false;
-      ticTacToeResult.textContent = msg;
-      // Payout
-      const bet = parseInt(ticTacToeBetInput.value, 10);
-      if (rigEnabled) {
-        // Force user to always "win"
-        playerMoney += bet;
-        ticTacToeResult.textContent += " (Rig: You always win!)";
-      } else {
-        if (msg.includes("X wins")) {
-          // user wins
-          playerMoney += bet;
-        } else if (msg.includes("O wins")) {
-          // user loses
-          playerMoney -= bet;
-        } else {
-          // draw no change
-        }
-      }
-      updateAllMoneyDisplays();
-    }
-
-    /***********************************************************************************
-     * AI ROCK PAPER SCISSORS LOGIC
-     ***********************************************************************************/
-    rpsPlayBtn.addEventListener("click", () => {
-      if (!isSaveLoaded) {
-        alert("Please load a valid save file first.");
-        return;
-      }
-      const bet = parseInt(rpsBetInput.value, 10);
-      if (bet <= 0 || bet > playerMoney) {
-        alert("Invalid bet amount!");
-        return;
-      }
-      const userChoice = rpsChoiceSelect.value;
-      let aiChoice = ["rock","paper","scissors"][Math.floor(Math.random() * 3)];
-      if (rigEnabled) {
-        // Force user to always beat the AI
-        if (userChoice === "rock") aiChoice = "scissors";
-        else if (userChoice === "paper") aiChoice = "rock";
-        else aiChoice = "paper";
-      }
-      let outcome = `You chose ${userChoice}, AI chose ${aiChoice}. `;
-
-      if (userChoice === aiChoice) {
-        outcome += "It's a draw!";
-      } else if (
-        (userChoice === "rock" && aiChoice === "scissors") ||
-        (userChoice === "paper" && aiChoice === "rock") ||
-        (userChoice === "scissors" && aiChoice === "paper")
-      ) {
-        // user wins
-        playerMoney += bet;
-        outcome += `You win $${bet}!`;
-      } else {
-        // user loses
-        playerMoney -= bet;
-        outcome += `You lose $${bet}.`;
-      }
-      rpsResult.textContent = outcome;
-      updateAllMoneyDisplays();
+      }, 100);
     });
 
-    /***********************************************************************************
-     * COIN FLIP LOGIC
-     ***********************************************************************************/
-    coinFlipBtn.addEventListener("click", () => {
-      if (!isSaveLoaded) {
-        alert("Please load a valid save file first.");
-        return;
-      }
-      const bet = parseInt(coinFlipBetInput.value, 10);
-      if (bet <= 0 || bet > playerMoney) {
-        alert("Invalid bet amount!");
-        return;
-      }
-      const userCall = coinFlipChoice.value;
-      let resultSide = Math.random() < 0.5 ? "heads" : "tails";
-      if (rigEnabled) {
-        // Force user to always guess correctly
-        resultSide = userCall;
-      }
-      let outcome = `Coin landed on ${resultSide}. `;
-      if (userCall === resultSide) {
-        playerMoney += bet;
-        outcome += `You won $${bet}!`;
-      } else {
-        playerMoney -= bet;
-        outcome += `You lost $${bet}.`;
-      }
-      coinFlipResult.textContent = outcome;
-      updateAllMoneyDisplays();
-    });
+    /*****************************************************************************
+     * TEXAS HOLD EM (SHOW ACTUAL CARDS)
+     *****************************************************************************/
+    const holdemBetInput       = document.getElementById("holdemBet");
+    const holdemDealBtn        = document.getElementById("holdemDealBtn");
+    const holdemPlayerCards    = document.getElementById("holdemPlayerCards");
+    const holdemDealerCards    = document.getElementById("holdemDealerCards");
+    const holdemCommunityCards = document.getElementById("holdemCommunityCards");
+    const holdemResult         = document.getElementById("holdemResult");
 
-    /***********************************************************************************
-     * TEXAS HOLD EM (SIMPLIFIED)
-     ***********************************************************************************/
     holdemDealBtn.addEventListener("click", () => {
       if (!isSaveLoaded) {
         alert("Please load a valid save file first.");
@@ -1721,42 +1438,460 @@ $:${moneyValue}
         alert("Invalid bet amount!");
         return;
       }
-      // For simplicity, let's do a random outcome
+      // Shuffle & deal
+      initDeck(); // re-use the Blackjack deck logic
+      const playerHole = [deck.pop(), deck.pop()];
+      const dealerHole = [deck.pop(), deck.pop()];
+      const community = [deck.pop(), deck.pop(), deck.pop(), deck.pop(), deck.pop()];
+
+      // Display
+      holdemPlayerCards.innerHTML = `<strong>Your Cards:</strong> ` + 
+        playerHole.map(c => `<span class="card-display">${c.rank}${c.suit}</span>`).join("");
+      holdemDealerCards.innerHTML = `<strong>Dealer Cards:</strong> ` + 
+        dealerHole.map(c => `<span class="card-display">${c.rank}${c.suit}</span>`).join("");
+      holdemCommunityCards.innerHTML = `<strong>Community:</strong> ` + 
+        community.map(c => `<span class="card-display">${c.rank}${c.suit}</span>`).join("");
+      holdemResult.textContent = "";
+
+      // Minimal random outcome
       let outcome = "You lose!";
-      if (rigEnabled) {
-        // Force user to win
-        outcome = "You win!";
+      if (userAlwaysWins()) {
+        outcome = "You win (Gunner/Rig Mode)!";
       } else {
-        // 50% chance to win
         if (Math.random() < 0.5) {
           outcome = "You win!";
         }
       }
-
       if (outcome.includes("win")) {
         playerMoney += bet;
       } else {
         playerMoney -= bet;
       }
+      updateAllDisplays();
       holdemResult.textContent = outcome;
-      updateAllMoneyDisplays();
     });
 
-    /***********************************************************************************
-     * EXTRA CODE / FILLER (for line count & completeness)
-     ***********************************************************************************/
-    function dummyFillerFunctionOne() {
-      console.log("Dummy filler function one executed.");
-    }
-    function dummyFillerFunctionTwo() {
-      console.log("Dummy filler function two executed.");
-    }
-    dummyFillerFunctionOne();
-    dummyFillerFunctionTwo();
+    /*****************************************************************************
+     * BINGO
+     *****************************************************************************/
+    const bingoBetInput = document.getElementById("bingoBet");
+    const bingoPlayBtn  = document.getElementById("bingoPlayBtn");
+    const bingoResult   = document.getElementById("bingoResult");
+    bingoPlayBtn.addEventListener("click", () => {
+      if (!isSaveLoaded) {
+        alert("Please load a valid save file first.");
+        return;
+      }
+      const bet = parseInt(bingoBetInput.value, 10);
+      if (bet <= 0 || bet > playerMoney) {
+        alert("Invalid bet amount!");
+        return;
+      }
+      let outcome = "You lose!";
+      if (userAlwaysWins() || Math.random() < 0.3) {
+        outcome = "Bingo! You win!";
+      }
+      if (outcome.includes("win")) {
+        playerMoney += bet;
+      } else {
+        playerMoney -= bet;
+      }
+      updateAllDisplays();
+      bingoResult.textContent = outcome;
+    });
 
-    console.log("All game modules initialized. Ready to play!");
+    /*****************************************************************************
+     * KENO
+     *****************************************************************************/
+    const kenoBetInput = document.getElementById("kenoBet");
+    const kenoPlayBtn  = document.getElementById("kenoPlayBtn");
+    const kenoResult   = document.getElementById("kenoResult");
+    kenoPlayBtn.addEventListener("click", () => {
+      if (!isSaveLoaded) {
+        alert("Please load a valid save file first.");
+        return;
+      }
+      const bet = parseInt(kenoBetInput.value, 10);
+      if (bet <= 0 || bet > playerMoney) {
+        alert("Invalid bet amount!");
+        return;
+      }
+      let outcome = "No matches, you lose!";
+      if (userAlwaysWins() || Math.random() < 0.25) {
+        outcome = "Keno jackpot! You win!";
+      }
+      if (outcome.includes("win")) {
+        playerMoney += bet;
+      } else {
+        playerMoney -= bet;
+      }
+      updateAllDisplays();
+      kenoResult.textContent = outcome;
+    });
 
-    // End of JavaScript code
-  </script>
+    /*****************************************************************************
+     * WAR
+     *****************************************************************************/
+    const warBetInput  = document.getElementById("warBet");
+    const warPlayBtn   = document.getElementById("warPlayBtn");
+    const warPlayerCard= document.getElementById("warPlayerCard");
+    const warDealerCard= document.getElementById("warDealerCard");
+    const warResult    = document.getElementById("warResult");
+    warPlayBtn.addEventListener("click", () => {
+      if (!isSaveLoaded) {
+        alert("Please load a valid save file first.");
+        return;
+      }
+      const bet = parseInt(warBetInput.value, 10);
+      if (bet <= 0 || bet > playerMoney) {
+        alert("Invalid bet amount!");
+        return;
+      }
+      initDeck();
+      const pCard = deck.pop();
+      const dCard = deck.pop();
+      warPlayerCard.textContent = `Player Card: ${pCard.rank}${pCard.suit}`;
+      warDealerCard.textContent = `Dealer Card: ${dCard.rank}${dCard.suit}`;
+      let pVal = getCardValue(pCard);
+      let dVal = getCardValue(dCard);
+      if (userAlwaysWins()) {
+        pVal = 99; // Force a bigger value
+      }
+      let outcome = "Dealer wins!";
+      if (pVal > dVal) {
+        outcome = "You win!";
+        playerMoney += bet;
+      } else if (pVal < dVal) {
+        playerMoney -= bet;
+      } else {
+        outcome = "Tie! No change.";
+      }
+      updateAllDisplays();
+      warResult.textContent = outcome;
+    });
+
+    /*****************************************************************************
+     * HIGH-LOW
+     *****************************************************************************/
+    const highLowBetInput = document.getElementById("highLowBet");
+    const highLowGuessSel = document.getElementById("highLowGuess");
+    const highLowPlayBtn  = document.getElementById("highLowPlayBtn");
+    const highLowCards    = document.getElementById("highLowCards");
+    const highLowResult   = document.getElementById("highLowResult");
+    highLowPlayBtn.addEventListener("click", () => {
+      if (!isSaveLoaded) {
+        alert("Please load a valid save file first.");
+        return;
+      }
+      const bet = parseInt(highLowBetInput.value, 10);
+      if (bet <= 0 || bet > playerMoney) {
+        alert("Invalid bet amount!");
+        return;
+      }
+      const guess = highLowGuessSel.value; // "higher" or "lower"
+      initDeck();
+      const card1 = deck.pop();
+      const card2 = deck.pop();
+      let val1 = getCardValue(card1);
+      let val2 = getCardValue(card2);
+      if (userAlwaysWins()) {
+        // Force guess correct
+        if (guess === "higher") {
+          val2 = val1 + 10;
+        } else {
+          val2 = val1 - 1;
+        }
+      }
+      highLowCards.textContent = `First card: ${card1.rank}${card1.suit}, Second card: ${card2.rank}${card2.suit}`;
+      let outcome = "You lose!";
+      if ((guess === "higher" && val2 > val1) || (guess === "lower" && val2 < val1)) {
+        outcome = "You win!";
+        playerMoney += bet;
+      } else if (val1 === val2) {
+        outcome = "Tie! No change.";
+      } else {
+        playerMoney -= bet;
+      }
+      updateAllDisplays();
+      highLowResult.textContent = outcome;
+    });
+
+    /*****************************************************************************
+     * LOTTERY
+     *****************************************************************************/
+    const lotteryCostInput = document.getElementById("lotteryCost");
+    const lotteryBuyBtn    = document.getElementById("lotteryBuyBtn");
+    const lotteryResult    = document.getElementById("lotteryResult");
+    lotteryBuyBtn.addEventListener("click", () => {
+      if (!isSaveLoaded) {
+        alert("Please load a valid save file first.");
+        return;
+      }
+      const cost = parseInt(lotteryCostInput.value, 10);
+      if (cost <= 0 || cost > playerMoney) {
+        alert("Invalid ticket cost!");
+        return;
+      }
+      // Pay cost
+      playerMoney -= cost;
+      let outcome = "No luck. You lost your ticket cost.";
+      if (userAlwaysWins() || Math.random() < 0.05) {
+        const jackpot = cost * 100;
+        playerMoney += jackpot;
+        outcome = `Jackpot! You won $${jackpot}!`;
+      }
+      updateAllDisplays();
+      lotteryResult.textContent = outcome;
+    });
+
+    /*****************************************************************************
+     * GENERAL GAMES
+     *****************************************************************************/
+    // Tic-Tac-Toe
+    const ticTacToeBetInput = document.getElementById("ticTacToeBet");
+    const ticTacToeStartBtn = document.getElementById("ticTacToeStartBtn");
+    const ticTacToeBoard    = document.getElementById("ticTacToeBoard");
+    const ticTacToeResult   = document.getElementById("ticTacToeResult");
+    let tttBoard = Array(9).fill("");
+    let tttGameActive = false;
+    let tttCurrentPlayer = "X";
+
+  ticTacToeStartBtn.addEventListener("click", () => {
+    if (!isSaveLoaded) {
+      alert("Please load a valid save file first.");
+      return;
+    }
+    const bet = parseInt(ticTacToeBetInput.value, 10);
+    if (bet <= 0 || bet > playerMoney) {
+      alert("Invalid bet amount!");
+      return;
+    }
+    startTicTacToeGame();
+  });
+
+  function startTicTacToeGame() {
+    tttBoard = Array(9).fill("");
+    tttGameActive = true;
+    tttCurrentPlayer = "X";
+    ticTacToeResult.textContent = "";
+    renderTicTacToeBoard();
+  }
+
+  function renderTicTacToeBoard() {
+    ticTacToeBoard.innerHTML = "";
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement("div");
+      cell.style.width = "50px";
+      cell.style.height = "50px";
+      cell.style.border = "1px solid #333";
+      cell.style.display = "flex";
+      cell.style.alignItems = "center";
+      cell.style.justifyContent = "center";
+      cell.style.fontSize = "1.5rem";
+      cell.style.cursor = "pointer";
+      cell.dataset.index = i.toString();
+      cell.textContent = tttBoard[i];
+      cell.addEventListener("click", onTicTacToeCellClick);
+      ticTacToeBoard.appendChild(cell);
+    }
+  }
+
+  function onTicTacToeCellClick(e) {
+    if (!tttGameActive) return;
+    const index = parseInt(e.target.dataset.index, 10);
+    if (tttBoard[index] !== "") return; // cell occupied
+    tttBoard[index] = tttCurrentPlayer;
+    renderTicTacToeBoard();
+
+    if (checkTicTacToeWin(tttCurrentPlayer)) {
+      endTicTacToeGame(`${tttCurrentPlayer} wins!`);
+      return;
+    }
+    if (tttBoard.every(c => c !== "")) {
+      endTicTacToeGame("It's a draw!");
+      return;
+    }
+    // Switch
+    tttCurrentPlayer = (tttCurrentPlayer === "X") ? "O" : "X";
+
+    if (tttCurrentPlayer === "O") {
+      setTimeout(aiTicTacToeMove, 500);
+    }
+  }
+
+  function aiTicTacToeMove() {
+    // If rig or Gunner mode is on, we let the user eventually win
+    // by picking a random cell or a "bad" move.
+    let emptyIndices = [];
+    for (let i = 0; i < 9; i++) {
+      if (tttBoard[i] === "") {
+        emptyIndices.push(i);
+      }
+    }
+    if (emptyIndices.length === 0) {
+      endTicTacToeGame("It's a draw!");
+      return;
+    }
+    // pick random
+    let aiIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+    if (userAlwaysWins()) {
+      // Intentionally pick the first empty to be 'bad'
+      aiIndex = emptyIndices[0];
+    }
+    tttBoard[aiIndex] = "O";
+    renderTicTacToeBoard();
+
+    if (checkTicTacToeWin("O")) {
+      endTicTacToeGame("O wins!");
+      return;
+    }
+    if (tttBoard.every(c => c !== "")) {
+      endTicTacToeGame("It's a draw!");
+      return;
+    }
+    tttCurrentPlayer = "X";
+  }
+
+  function checkTicTacToeWin(player) {
+    const wins = [
+      [0,1,2],[3,4,5],[6,7,8],
+      [0,3,6],[1,4,7],[2,5,8],
+      [0,4,8],[2,4,6]
+    ];
+    return wins.some(pattern => pattern.every(idx => tttBoard[idx] === player));
+  }
+
+  function endTicTacToeGame(msg) {
+    tttGameActive = false;
+    let bet = parseInt(ticTacToeBetInput.value, 10);
+    if (userAlwaysWins()) {
+      playerMoney += bet;
+      msg += " (Gunner/Rig Mode: You cannot lose!)";
+    } else {
+      if (msg.includes("X wins")) {
+        playerMoney += bet; // user is X
+      } else if (msg.includes("O wins")) {
+        playerMoney -= bet;
+      }
+    }
+    ticTacToeResult.textContent = msg;
+    updateAllDisplays();
+  }
+
+  /*****************************************************************************
+   * ROCK PAPER SCISSORS
+   *****************************************************************************/
+  const rpsBetInput = document.getElementById("rpsBet");
+  const rpsChoiceSelect = document.getElementById("rpsChoice");
+  const rpsPlayBtn = document.getElementById("rpsPlayBtn");
+  const rpsResult = document.getElementById("rpsResult");
+
+  rpsPlayBtn.addEventListener("click", () => {
+    if (!isSaveLoaded) {
+      alert("Please load a valid save file first.");
+      return;
+    }
+    const bet = parseInt(rpsBetInput.value, 10);
+    if (bet <= 0 || bet > playerMoney) {
+      alert("Invalid bet amount!");
+      return;
+    }
+    let userChoice = rpsChoiceSelect.value;
+    let aiChoice = ["rock","paper","scissors"][Math.floor(Math.random()*3)];
+    if (userAlwaysWins()) {
+      // Force user to beat AI
+      if (userChoice === "rock") aiChoice = "scissors";
+      else if (userChoice === "paper") aiChoice = "rock";
+      else aiChoice = "paper";
+    }
+    let outcome = `You chose ${userChoice}, AI chose ${aiChoice}. `;
+    if (userChoice === aiChoice) {
+      outcome += "It's a draw!";
+    } else if (
+      (userChoice === "rock" && aiChoice === "scissors") ||
+      (userChoice === "paper" && aiChoice === "rock") ||
+      (userChoice === "scissors" && aiChoice === "paper")
+    ) {
+      // user wins
+      playerMoney += bet;
+      outcome += `You win $${bet}!`;
+    } else {
+      // lose
+      playerMoney -= bet;
+      outcome += `You lose $${bet}.`;
+    }
+    rpsResult.textContent = outcome;
+    updateAllDisplays();
+  });
+
+  /*****************************************************************************
+   * COIN FLIP
+   *****************************************************************************/
+  const coinFlipBetInput = document.getElementById("coinFlipBet");
+  const coinFlipChoice   = document.getElementById("coinFlipChoice");
+  const coinFlipBtn      = document.getElementById("coinFlipBtn");
+  const coinFlipResult   = document.getElementById("coinFlipResult");
+
+  coinFlipBtn.addEventListener("click", () => {
+    if (!isSaveLoaded) {
+      alert("Please load a valid save file first.");
+      return;
+    }
+    const bet = parseInt(coinFlipBetInput.value, 10);
+    if (bet <= 0 || bet > playerMoney) {
+      alert("Invalid bet amount!");
+      return;
+    }
+    let call = coinFlipChoice.value;
+    let resultSide = Math.random() < 0.5 ? "heads" : "tails";
+    if (userAlwaysWins()) {
+      resultSide = call; // Force user to guess right
+    }
+    let outcome = `Coin landed on ${resultSide}. `;
+    if (resultSide === call) {
+      playerMoney += bet;
+      outcome += `You won $${bet}!`;
+    } else {
+      playerMoney -= bet;
+      outcome += `You lost $${bet}.`;
+    }
+    coinFlipResult.textContent = outcome;
+    updateAllDisplays();
+  });
+
+  /*****************************************************************************
+   * MEMORY MATCH (SIMPLE DEMO)
+   *****************************************************************************/
+  const memoryMatchBetInput = document.getElementById("memoryMatchBet");
+  const memoryMatchPlayBtn  = document.getElementById("memoryMatchPlayBtn");
+  const memoryMatchResult   = document.getElementById("memoryMatchResult");
+
+  memoryMatchPlayBtn.addEventListener("click", () => {
+    if (!isSaveLoaded) {
+      alert("Please load a valid save file first.");
+      return;
+    }
+    const bet = parseInt(memoryMatchBetInput.value, 10);
+    if (bet <= 0 || bet > playerMoney) {
+      alert("Invalid bet amount!");
+      return;
+    }
+    let outcome = "You didn't match the cards. You lose!";
+    if (userAlwaysWins() || Math.random() < 0.4) {
+      outcome = "You matched them! You win!";
+    }
+    if (outcome.includes("win")) {
+      playerMoney += bet;
+    } else {
+      playerMoney -= bet;
+    }
+    memoryMatchResult.textContent = outcome;
+    updateAllDisplays();
+  });
+
+  // Initialize
+  updateAllDisplays();
+  console.log("All games initialized. Enjoy Gunner Casino!");
+</script>
 </body>
 </html>
