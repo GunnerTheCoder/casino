@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>GUNNER CASTLE AND CHATGPT CASINO WEBSITE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    h1, h2, h3 {
+      margin: 0.5em 0;
+    }
+    .section {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #gameSection {
+      display: none;
+    }
+    .game-box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      background: #fafafa;
+    }
+    button {
+      padding: 8px 12px;
+      margin: 5px 0;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background: #007BFF;
+      color: #fff;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    input[type="number"] {
+      width: 80px;
+    }
+    .disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .cards {
+      margin-top: 10px;
+    }
+    .card {
+      display: inline-block;
+      padding: 5px 8px;
+      margin: 0 3px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>GUNNER CASTLE AND CHATGPT CASINO WEBSITE</h1>
+  
+  <!-- Upload/Load Save File -->
+  <div class="section">
+    <h2>1. Upload Save File</h2>
+    <input type="file" id="saveFileInput" accept=".txt,.hex" />
+    <button id="loadSaveBtn">Load Save</button>
+    <p id="loadMessage" style="color:red;"></p>
+  </div>
+  
+  <!-- Games Section (shown only if valid save loaded) -->
+  <div id="gameSection" class="section">
+    <h2>Your Money: <span id="moneyDisplay"></span></h2>
+    
+    <!-- Blackjack -->
+    <div class="game-box">
+      <h3>Blackjack</h3>
+      <div>
+        <label>Bet Amount: <input type="number" id="blackjackBet" value="10" min="1" /></label>
+        <button id="blackjackDealBtn">Deal</button>
+        <button id="blackjackHitBtn" disabled>Hit</button>
+        <button id="blackjackStandBtn" disabled>Stand</button>
+      </div>
+      <div id="blackjackStatus"></div>
+      <div class="cards">
+        <div>Player Cards: <span id="playerCards"></span> | <strong>Total:</strong> <span id="playerTotal">0</span></div>
+        <div>Dealer Cards: <span id="dealerCards"></span> | <strong>Total:</strong> <span id="dealerTotal">0</span></div>
+      </div>
+    </div>
+    
+    <!-- Roulette -->
+    <div class="game-box">
+      <h3>Roulette</h3>
+      <div>
+        <label>Bet Amount: <input type="number" id="rouletteBet" value="10" min="1" /></label>
+        <label>Bet on:
+          <select id="rouletteChoice">
+            <option value="red">Red</option>
+            <option value="black">Black</option>
+            <option value="0">0</option>
+          </select>
+        </label>
+        <button id="rouletteSpinBtn">Spin</button>
+      </div>
+      <div id="rouletteResult"></div>
+    </div>
+    
+    <!-- Slots -->
+    <div class="game-box">
+      <h3>Slots</h3>
+      <div>
+        <label>Bet Amount: <input type="number" id="slotsBet" value="10" min="1" /></label>
+        <button id="slotsSpinBtn">Spin</button>
+      </div>
+      <div id="slotsReels">[ ? ] [ ? ] [ ? ]</div>
+      <div id="slotsResult"></div>
+    </div>
+    
+    <!-- Download Updated Save -->
+    <button id="downloadSaveBtn">Download Save File</button>
+  </div>
+  
+  <script>
+    // ----------------------------------------------------
+    // Global variables
+    // ----------------------------------------------------
+    let playerMoney = 0;         // Player's current money
+    let deck = [];               // For Blackjack
+    let playerCards = [];
+    let dealerCards = [];
+    const suits = ["♠","♥","♦","♣"];
+    const ranks = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+    
+    // ----------------------------------------------------
+    // 1. Parse/Load Save File
+    // ----------------------------------------------------
+    const saveFileInput = document.getElementById('saveFileInput');
+    const loadSaveBtn = document.getElementById('loadSaveBtn');
+    const loadMessage = document.getElementById('loadMessage');
+    const gameSection = document.getElementById('gameSection');
+    const moneyDisplay = document.getElementById('moneyDisplay');
+    
+    loadSaveBtn.addEventListener('click', () => {
+      const file = saveFileInput.files && saveFileInput.files[0];
+      if (!file) {
+        loadMessage.textContent = "Please select a file first.";
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const contents = e.target.result;
+        const moneyVal = parseSaveFile(contents);
+        if (moneyVal === null) {
+          loadMessage.textContent = "Error: Money, Gold, and $ do not match or file format invalid.";
+          gameSection.style.display = 'none';
+        } else {
+          loadMessage.textContent = "";
+          playerMoney = moneyVal;
+          moneyDisplay.textContent = playerMoney;
+          gameSection.style.display = 'block';
+        }
+      };
+      reader.readAsText(file);
+    });
+    
+    /**
+     * Parse the save file text to extract Money, Gold, and $ values.
+     * Returns the numeric value if valid (all match), or null if invalid.
+     */
+    function parseSaveFile(contents) {
+      // Look for lines like Money:<digits>, Gold:<digits>, $:<digits>
+      const moneyMatch = contents.match(/Money:(\d+)/);
+      const goldMatch = contents.match(/Gold:(\d+)/);
+      const dollarMatch = contents.match(/\$:(\d+)/);
+      
+      if (!moneyMatch || !goldMatch || !dollarMatch) {
+        return null;
+      }
+      
+      const moneyVal = parseInt(moneyMatch[1], 10);
+      const goldVal = parseInt(goldMatch[1], 10);
+      const dollarVal = parseInt(dollarMatch[1], 10);
+      
+      // Check if all three match
+      if (moneyVal !== goldVal || goldVal !== dollarVal) {
+        return null;
+      }
+      
+      return moneyVal;
+    }
+    
+    // ----------------------------------------------------
+    // 2. Download Updated Save File
+    // ----------------------------------------------------
+    const downloadSaveBtn = document.getElementById('downloadSaveBtn');
+    downloadSaveBtn.addEventListener('click', () => {
+      const fileContents = createSaveFileContent(playerMoney);
+      const blob = new Blob([fileContents], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = "GunnerCastleChatGPTCasino.hex";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+    
+    /**
+     * Create the updated save file content, matching the original format.
+     * All three lines (Money, Gold, $) have the same numeric value.
+     */
+    function createSaveFileContent(moneyValue) {
+      return (
+`GUNNER CASTLE AND CHATGPT CASINO WEBSITE
+Money:${moneyValue}
+Gold:${moneyValue}
+$:${moneyValue}
+`
+      );
+    }
+    
+    // ----------------------------------------------------
+    // 3. Blackjack Logic
+    // ----------------------------------------------------
+    const blackjackBetInput = document.getElementById('blackjackBet');
+    const blackjackDealBtn = document.getElementById('blackjackDealBtn');
+    const blackjackHitBtn = document.getElementById('blackjackHitBtn');
+    const blackjackStandBtn = document.getElementById('blackjackStandBtn');
+    const blackjackStatus = document.getElementById('blackjackStatus');
+    const playerCardsSpan = document.getElementById('playerCards');
+    const dealerCardsSpan = document.getElementById('dealerCards');
+    const playerTotalSpan = document.getElementById('playerTotal');
+    const dealerTotalSpan = document.getElementById('dealerTotal');
+    
+    // Initialize or reset the deck
+    function initDeck() {
+      deck = [];
+      for (let s of suits) {
+        for (let r of ranks) {
+          deck.push({suit: s, rank: r});
+        }
+      }
+      // Shuffle deck
+      for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+      }
+    }
+    
+    function getCardValue(card) {
+      if (card.rank === "A") return 11;  // We'll handle Ace adjustments later
+      if (["J","Q","K"].includes(card.rank)) return 10;
+      return parseInt(card.rank, 10);
+    }
+    
+    function calculateTotal(cards) {
+      let total = 0;
+      let aceCount = 0;
+      for (let c of cards) {
+        total += getCardValue(c);
+        if (c.rank === "A") aceCount++;
+      }
+      // Adjust for Aces
+      while (total > 21 && aceCount > 0) {
+        total -= 10; // Make an Ace worth 1 instead of 11
+        aceCount--;
+      }
+      return total;
+    }
+    
+    function renderHands() {
+      playerCardsSpan.textContent = playerCards.map(c => c.rank + c.suit).join(" ");
+      dealerCardsSpan.textContent = dealerCards.map(c => c.rank + c.suit).join(" ");
+      playerTotalSpan.textContent = calculateTotal(playerCards);
+      dealerTotalSpan.textContent = calculateTotal(dealerCards);
+    }
+    
+    blackjackDealBtn.addEventListener('click', () => {
+      const bet = parseInt(blackjackBetInput.value, 10);
+      if (bet <= 0 || bet > playerMoney) {
+        alert("Invalid bet amount!");
+        return;
+      }
+      
+      initDeck();
+      playerCards = [deck.pop(), deck.pop()];
+      dealerCards = [deck.pop(), deck.pop()];
+      
+      blackjackHitBtn.disabled = false;
+      blackjackStandBtn.disabled = false;
+      blackjackDealBtn.disabled = true;
+      blackjackStatus.textContent = "";
+      
+      renderHands();
+    });
+    
+    blackjackHitBtn.addEventListener('click', () => {
+      playerCards.push(deck.pop());
+      renderHands();
+      
+      const total = calculateTotal(playerCards);
+      if (total > 21) {
+        endBlackjackRound("Bust! You lose.");
+      }
+    });
+    
+    blackjackStandBtn.addEventListener('click', () => {
+      // Dealer's turn
+      while (calculateTotal(dealerCards) < 17) {
+        dealerCards.push(deck.pop());
+      }
+      renderHands();
+      
+      const playerTotal = calculateTotal(playerCards);
+      const dealerTotal = calculateTotal(dealerCards);
+      
+      if (dealerTotal > 21) {
+        endBlackjackRound("Dealer busts! You win.");
+      } else if (playerTotal > dealerTotal) {
+        endBlackjackRound("You win!");
+      } else if (playerTotal < dealerTotal) {
+        endBlackjackRound("Dealer wins.");
+      } else {
+        endBlackjackRound("Push (tie).");
+      }
+    });
+    
+    function endBlackjackRound(message) {
+      // Adjust money
+      const bet = parseInt(blackjackBetInput.value, 10);
+      const playerTotal = calculateTotal(playerCards);
+      const dealerTotal = calculateTotal(dealerCards);
+      
+      if (message.includes("You win")) {
+        // Player wins bet
+        playerMoney += bet;
+      } else if (message.includes("lose") || message.includes("Dealer wins")) {
+        // Player loses bet
+        playerMoney -= bet;
+      } else {
+        // Tie: no change
+      }
+      
+      moneyDisplay.textContent = playerMoney;
+      blackjackStatus.textContent = message;
+      
+      blackjackHitBtn.disabled = true;
+      blackjackStandBtn.disabled = true;
+      blackjackDealBtn.disabled = false;
+    }
+    
+    // ----------------------------------------------------
+    // 4. Roulette Logic
+    // ----------------------------------------------------
+    const rouletteBetInput = document.getElementById('rouletteBet');
+    const rouletteChoiceSelect = document.getElementById('rouletteChoice');
+    const rouletteSpinBtn = document.getElementById('rouletteSpinBtn');
+    const rouletteResult = document.getElementById('rouletteResult');
+    
+    rouletteSpinBtn.addEventListener('click', () => {
+      const bet = parseInt(rouletteBetInput.value, 10);
+      if (bet <= 0 || bet > playerMoney) {
+        alert("Invalid bet amount!");
+        return;
+      }
+      const choice = rouletteChoiceSelect.value; // 'red', 'black', or '0'
+      
+      // Spin result: number 0-36, with 18 red, 18 black, 1 green(0)
+      const spinNumber = Math.floor(Math.random() * 37); // 0 to 36
+      let spinColor = "green";
+      if (spinNumber > 0) {
+        // Quick approach: consider even numbers black, odd numbers red (not strictly correct in real roulette)
+        spinColor = (spinNumber % 2 === 0) ? "black" : "red";
+      }
+      
+      let outcome = `Spin: ${spinNumber} (${spinColor}) - You lose.`;
+      let won = false;
+      
+      if (choice === "0") {
+        // Win if spinNumber == 0
+        if (spinNumber === 0) {
+          won = true;
+        }
+      } else {
+        // 'red' or 'black'
+        if (spinColor === choice) {
+          won = true;
+        }
+      }
+      
+      if (won) {
+        // Simplify payout: if you bet on 0, triple the bet, otherwise double
+        if (choice === "0") {
+          playerMoney += bet * 35; // typical roulette payoff for a single number
+          outcome = `Spin: ${spinNumber} (green) - You WON \$${bet * 35}!`;
+        } else {
+          playerMoney += bet; // net gain is bet
+          outcome = `Spin: ${spinNumber} (${spinColor}) - You WON \$${bet}!`;
+        }
+      } else {
+        playerMoney -= bet;
+      }
+      
+      moneyDisplay.textContent = playerMoney;
+      rouletteResult.textContent = outcome;
+    });
+    
+    // ----------------------------------------------------
+    // 5. Slots Logic
+    // ----------------------------------------------------
+    const slotsBetInput = document.getElementById('slotsBet');
+    const slotsSpinBtn = document.getElementById('slotsSpinBtn');
+    const slotsReels = document.getElementById('slotsReels');
+    const slotsResult = document.getElementById('slotsResult');
+    
+    const symbols = ["🍒","🍋","🔔","⭐","🍀"];
+    
+    slotsSpinBtn.addEventListener('click', () => {
+      const bet = parseInt(slotsBetInput.value, 10);
+      if (bet <= 0 || bet > playerMoney) {
+        alert("Invalid bet amount!");
+        return;
+      }
+      
+      // Spin the reels
+      const reel1 = symbols[Math.floor(Math.random() * symbols.length)];
+      const reel2 = symbols[Math.floor(Math.random() * symbols.length)];
+      const reel3 = symbols[Math.floor(Math.random() * symbols.length)];
+      slotsReels.textContent = `[ ${reel1} ] [ ${reel2} ] [ ${reel3} ]`;
+      
+      // Determine outcome
+      if (reel1 === reel2 && reel2 === reel3) {
+        // Three of a kind: win 5x
+        const winAmount = bet * 5;
+        playerMoney += winAmount;
+        slotsResult.textContent = `Jackpot! You won \$${winAmount}.`;
+      } else if (reel1 === reel2 || reel2 === reel3 || reel1 === reel3) {
+        // Two of a kind: win 2x
+        const winAmount = bet * 2;
+        playerMoney += (winAmount - bet); // net +bet
+        slotsResult.textContent = `Two of a kind! You won \$${winAmount}.`;
+      } else {
+        // Lose
+        playerMoney -= bet;
+        slotsResult.textContent = `No match! You lost \$${bet}.`;
+      }
+      
+      moneyDisplay.textContent = playerMoney;
+    });
+  </script>
+</body>
+</html>
