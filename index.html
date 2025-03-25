@@ -324,25 +324,28 @@ input[type="number"] {
     <div id="tabLoadSave" class="tab-section fade-in" style="display: block;">
       <h2>Load/Save Your Game</h2>
       <p>
-        To begin, upload a valid save file that contains matching values for 
-        <code>Money:</code>, <code>Gold:</code>, and <code>$:</code>. 
-        If these values do not match, the game will refuse to load.
+        Use the template or upload your existing save file to continue playing.
       </p>
 
+      <!-- Download Template Section -->
       <div class="save-file-section">
+        <h3>Download Save Template</h3>
+        <p>This template starts you off with $500.</p>
+        <button id="downloadTemplateBtn">Download Save Template</button>
+      </div>
+
+      <!-- Upload Save File Section -->
+      <div class="save-file-section" style="margin-top: 30px;">
         <h3>Upload Save File</h3>
         <input type="file" id="saveFileInput" accept=".txt,.hex">
         <button id="loadSaveBtn">Load Save</button>
         <p id="loadMessage"></p>
       </div>
 
+      <!-- Download Updated Save Section -->
       <div class="save-file-section" style="margin-top: 30px;">
-        <h3>Download Save File</h3>
-        <p>
-          Once you've played, you can download a new save file. 
-          This file will keep <code>Money:</code>, <code>Gold:</code>, and 
-          <code>$:</code> in sync with your current balance.
-        </p>
+        <h3>Download Updated Save File</h3>
+        <p>After playing, download a file to save your progress.</p>
         <button id="downloadSaveBtn" disabled>Download Save File</button>
       </div>
 
@@ -448,28 +451,28 @@ input[type="number"] {
   GLOBAL VARIABLES & STATE
 ================================================================================
 */
-let playerMoney = 0;   // The player's current money, loaded from the save file
+let playerMoney = 0;      // The player's current money, loaded from a save file
 let isSaveLoaded = false; // Whether a valid save file has been loaded
 
 // We will display the player's money in each tab for convenience
 // (Blackjack, Roulette, Slots).
-// We'll update these displays whenever playerMoney changes.
 const moneyDisplayBlackjack = document.getElementById('moneyDisplayBlackjack');
 const moneyDisplayRoulette  = document.getElementById('moneyDisplayRoulette');
 const moneyDisplaySlots     = document.getElementById('moneyDisplaySlots');
 
 // File input & message
-const saveFileInput = document.getElementById('saveFileInput');
-const loadSaveBtn   = document.getElementById('loadSaveBtn');
-const loadMessage   = document.getElementById('loadMessage');
+const saveFileInput    = document.getElementById('saveFileInput');
+const loadSaveBtn      = document.getElementById('loadSaveBtn');
+const loadMessage      = document.getElementById('loadMessage');
 
-// Download button
-const downloadSaveBtn = document.getElementById('downloadSaveBtn');
+// Download buttons
+const downloadTemplateBtn = document.getElementById('downloadTemplateBtn');
+const downloadSaveBtn     = document.getElementById('downloadSaveBtn');
 
 // 
 // TABLINKS & TAB SECTIONS
 //
-const tabLinks = document.querySelectorAll('.tablink');
+const tabLinks    = document.querySelectorAll('.tablink');
 const tabSections = document.querySelectorAll('.tab-section');
 
 // 
@@ -491,22 +494,22 @@ const dealerCardsSpan      = document.getElementById('dealerCards');
 const playerTotalSpan      = document.getElementById('playerTotal');
 const dealerTotalSpan      = document.getElementById('dealerTotal');
 
-// Suits and ranks for Blackjack
+// Blackjack Suits and ranks
 const suits = ["♠","♥","♦","♣"];
 const ranks = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
 
 // Roulette
-const rouletteBetInput   = document.getElementById('rouletteBet');
-const rouletteChoiceSelect = document.getElementById('rouletteChoice');
-const rouletteSpinBtn    = document.getElementById('rouletteSpinBtn');
-const rouletteResult     = document.getElementById('rouletteResult');
+const rouletteBetInput    = document.getElementById('rouletteBet');
+const rouletteChoiceSelect= document.getElementById('rouletteChoice');
+const rouletteSpinBtn     = document.getElementById('rouletteSpinBtn');
+const rouletteResult      = document.getElementById('rouletteResult');
 
 // Slots
-const slotsBetInput      = document.getElementById('slotsBet');
-const slotsSpinBtn       = document.getElementById('slotsSpinBtn');
-const slotsReels         = document.getElementById('slotsReels');
-const slotsResult        = document.getElementById('slotsResult');
-const symbols            = ["🍒","🍋","🔔","⭐","🍀"];
+const slotsBetInput  = document.getElementById('slotsBet');
+const slotsSpinBtn   = document.getElementById('slotsSpinBtn');
+const slotsReels     = document.getElementById('slotsReels');
+const slotsResult    = document.getElementById('slotsResult');
+const symbols        = ["🍒","🍋","🔔","⭐","🍀"];
 
 
 /* 
@@ -537,19 +540,31 @@ tabLinks.forEach(link => {
 
 /* 
 ================================================================================
-  LOAD SAVE FILE LOGIC
+  SAVE FILE LOGIC
 ================================================================================
 */
 
 /**
+ * createStarterSaveFileContent()
+ * Returns a "starter" file content with $500 as the default.
+ */
+function createStarterSaveFileContent() {
+  return (
+`GUNNER CASTLE AND CHATGPT CASINO WEBSITE
+Money:500
+Gold:500
+$:500
+`
+  );
+}
+
+/**
  * parseSaveFile(contents)
- * Parses the text contents of the save file to extract 
- *   Money:<number>
- *   Gold:<number>
- *   $:<number>
- * If all three match, returns that numeric value; otherwise returns null.
+ * Ensures the file is valid and extracts the money value if so.
+ * Returns the numeric value or null if invalid.
  */
 function parseSaveFile(contents) {
+  // Look for lines with Money:<number>, Gold:<number>, $:<number>
   const moneyMatch  = contents.match(/Money:(\d+)/);
   const goldMatch   = contents.match(/Gold:(\d+)/);
   const dollarMatch = contents.match(/\$:(\d+)/);
@@ -562,6 +577,7 @@ function parseSaveFile(contents) {
   const goldVal   = parseInt(goldMatch[1], 10);
   const dollarVal = parseInt(dollarMatch[1], 10);
 
+  // Internal check for validity
   if (moneyVal !== goldVal || goldVal !== dollarVal) {
     return null;
   }
@@ -571,12 +587,10 @@ function parseSaveFile(contents) {
 
 /**
  * createSaveFileContent(moneyValue)
- * Returns the string content of the save file, with all 
- * three lines matching the given moneyValue.
+ * Returns the string content of the save file, 
+ * storing the player's current money in all lines.
  */
 function createSaveFileContent(moneyValue) {
-  // If you wanted to mimic a hex editor's ASCII region, you could add
-  // more lines or padding. For now, we'll keep it simple:
   return (
 `GUNNER CASTLE AND CHATGPT CASINO WEBSITE
 Money:${moneyValue}
@@ -585,6 +599,21 @@ $:${moneyValue}
 `
   );
 }
+
+// Download the starter template
+downloadTemplateBtn.addEventListener('click', () => {
+  const starterContents = createStarterSaveFileContent();
+  const blob = new Blob([starterContents], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = "GunnerCastleChatGPTCasinoTemplate.hex";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+});
 
 // Handle "Load Save" button
 loadSaveBtn.addEventListener('click', () => {
@@ -599,9 +628,8 @@ loadSaveBtn.addEventListener('click', () => {
     const contents = e.target.result;
     const moneyVal = parseSaveFile(contents);
     if (moneyVal === null) {
-      loadMessage.textContent = "Error: Money, Gold, and $ do not match or file format invalid.";
+      loadMessage.textContent = "Error: Invalid or corrupted file.";
       isSaveLoaded = false;
-      // Disable the download button since no valid save
       downloadSaveBtn.disabled = true;
     } else {
       loadMessage.textContent = "Save file loaded successfully!";
@@ -617,7 +645,7 @@ loadSaveBtn.addEventListener('click', () => {
 // Handle "Download Save File" button
 downloadSaveBtn.addEventListener('click', () => {
   if (!isSaveLoaded) {
-    alert("No valid save loaded yet. Please load a valid save first.");
+    alert("No valid save loaded yet. Please load a save file first.");
     return;
   }
   const fileContents = createSaveFileContent(playerMoney);
@@ -632,6 +660,7 @@ downloadSaveBtn.addEventListener('click', () => {
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 });
+
 
 /* 
 ================================================================================
@@ -717,10 +746,7 @@ function renderHands() {
  */
 function endBlackjackRound(message) {
   const bet = parseInt(blackjackBetInput.value, 10);
-  const playerTotal = calculateTotal(playerCards);
-  const dealerTotal = calculateTotal(dealerCards);
 
-  // Determine if player won, lost, or push
   if (message.includes("You win")) {
     playerMoney += bet;
   } else if (message.includes("lose") || message.includes("Dealer wins")) {
@@ -742,7 +768,7 @@ function endBlackjackRound(message) {
  */
 blackjackDealBtn.addEventListener('click', () => {
   if (!isSaveLoaded) {
-    alert("Please load a valid save file first!");
+    alert("Please load a valid save file first.");
     return;
   }
 
@@ -813,7 +839,7 @@ blackjackStandBtn.addEventListener('click', () => {
  */
 rouletteSpinBtn.addEventListener('click', () => {
   if (!isSaveLoaded) {
-    alert("Please load a valid save file first!");
+    alert("Please load a valid save file first.");
     return;
   }
 
@@ -876,7 +902,7 @@ rouletteSpinBtn.addEventListener('click', () => {
  */
 slotsSpinBtn.addEventListener('click', () => {
   if (!isSaveLoaded) {
-    alert("Please load a valid save file first!");
+    alert("Please load a valid save file first.");
     return;
   }
 
@@ -912,7 +938,6 @@ slotsSpinBtn.addEventListener('click', () => {
 
   updateMoneyDisplays();
 });
-
 </script>
 </body>
 </html>
